@@ -1,6 +1,8 @@
+import SignupPage from './pages/SignupPage';
+
 const App = () => (
   <div>
-    Hello World
+    <SignupPage />
   </div>
 );
 
