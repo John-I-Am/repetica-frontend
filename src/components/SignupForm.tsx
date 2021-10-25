@@ -1,7 +1,32 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../reducers/userReducer';
+
 const SignupForm = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignup = (event: any) => {
+    event.preventDefault();
+    dispatch(registerUser({
+      name,
+      surname,
+      email,
+      password,
+    }));
+
+    setName('');
+    setSurname('');
+    setEmail('');
+    setPassword('');
+  };
+
   const signupFormStyle = {
     display: 'flex',
     flexDirection: 'column' as 'column',
@@ -54,14 +79,15 @@ const SignupForm = () => {
         <p>Already registered? Log in here</p>
       </div>
 
-      <form style={formStyle}>
+      <form onSubmit={handleSignup} style={formStyle}>
         <div style={innerForm}>
           <div>
             <label htmlFor="name">First Name</label>
             <input
+              onChange={({ target }) => setName(target.value)}
               style={inputStyle}
               id="name"
-              value=""
+              value={name}
               placeholder="name"
             />
           </div>
@@ -69,28 +95,31 @@ const SignupForm = () => {
           <div>
             <label htmlFor="surname">Surname</label>
             <input
+              onChange={({ target }) => setSurname(target.value)}
               style={inputStyle}
               id="surname"
-              value=""
+              value={surname}
               placeholder="surname"
             />
           </div>
           <div>
             <label htmlFor="email">Email Address</label>
             <input
+              onChange={({ target }) => setEmail(target.value)}
               style={inputStyle}
               id="email"
-              value=""
+              value={email}
               placeholder="Email"
             />
           </div>
           <div>
             <label htmlFor="password">Password</label>
             <input
+              onChange={({ target }) => setPassword(target.value)}
               style={inputStyle}
               id="password"
               type="password"
-              value=""
+              value={password}
               placeholder="password"
             />
           </div>
