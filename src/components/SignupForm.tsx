@@ -1,12 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import { registerUser } from '../reducers/userReducer';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -25,6 +26,9 @@ const SignupForm = () => {
     setSurname('');
     setEmail('');
     setPassword('');
+
+    // Temporary fix for login not redirecting to homepage due to dispatch not waiting
+    setTimeout(() => history.push('/home'), 400);
   };
 
   const signupFormStyle = {
