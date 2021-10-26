@@ -7,7 +7,10 @@ const setToken = (newToken: any) => {
 };
 
 const getAll = async () => {
-  const response = await axios.get('/api/cards');
+  const config: any = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.get('/api/cards', config);
   return response.data;
 };
 
