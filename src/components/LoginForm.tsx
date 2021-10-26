@@ -4,27 +4,21 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../reducers/userReducer';
+import { setUser } from '../reducers/userReducer';
 
-const SignupForm = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = (event: any) => {
+  const handleLogin = (event: any) => {
     event.preventDefault();
-    dispatch(registerUser({
-      name,
-      surname,
+    dispatch(setUser({
       email,
       password,
     }));
 
-    setName('');
-    setSurname('');
     setEmail('');
     setPassword('');
 
@@ -32,7 +26,7 @@ const SignupForm = () => {
     setTimeout(() => history.push('/home'), 400);
   };
 
-  const signupFormStyle = {
+  const loginFormStyle = {
     display: 'flex',
     flexDirection: 'column' as 'column',
     alignItems: 'center',
@@ -78,39 +72,20 @@ const SignupForm = () => {
   };
 
   return (
-    <div style={signupFormStyle}>
+    <div style={loginFormStyle}>
       <div>
-        <h1>Create Account</h1>
+        <h1>Login</h1>
         <p>
-          Already registered? Log in
+          Not a member? signup
           {' '}
-          <Link to="/login">here </Link>
+          <Link to="/register">here </Link>
         </p>
+        <p>Forgotten password? Recover details here</p>
       </div>
 
-      <form onSubmit={handleSignup} style={formStyle}>
+      <form onSubmit={handleLogin} style={formStyle}>
         <div style={innerForm}>
-          <div>
-            <label htmlFor="name">First Name</label>
-            <input
-              onChange={({ target }) => setName(target.value)}
-              style={inputStyle}
-              id="name"
-              value={name}
-              placeholder="name"
-            />
-          </div>
 
-          <div>
-            <label htmlFor="surname">Surname</label>
-            <input
-              onChange={({ target }) => setSurname(target.value)}
-              style={inputStyle}
-              id="surname"
-              value={surname}
-              placeholder="surname"
-            />
-          </div>
           <div>
             <label htmlFor="email">Email Address</label>
             <input
@@ -134,10 +109,10 @@ const SignupForm = () => {
           </div>
 
         </div>
-        <button style={buttonStyle} id="signup-button" type="submit">Signup</button>
+        <button style={buttonStyle} id="signup-button" type="submit">Login</button>
       </form>
     </div>
   );
 };
 
-export default SignupForm;
+export default LoginForm;

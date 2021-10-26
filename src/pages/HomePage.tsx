@@ -6,7 +6,7 @@ const HomePage = () => {
   const history = useHistory();
 
   const handleLogout = () => {
-    history.push('/');
+    history.push('/login');
     window.localStorage.removeItem('currentUser');
   };
 
