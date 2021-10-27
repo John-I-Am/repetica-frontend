@@ -7,6 +7,9 @@ const userReducer = (state = null, action: any) => {
       return action.data;
     case 'REGISTER_USER':
       return action.data;
+    case 'CLEAR_USER':
+      window.localStorage.clear();
+      return null;
     default:
       return state;
   }
@@ -36,5 +39,9 @@ export const registerUser = (newUser: any) => async (dispatch: any) => {
     console.log(e);
   }
 };
+
+export const clearUser = () => ({
+  type: 'CLEAR_USER',
+});
 
 export default userReducer;

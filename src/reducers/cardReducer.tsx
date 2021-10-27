@@ -6,6 +6,8 @@ const cardReducer = (state = [], action: any) => {
       return action.data;
     case 'CREATE_CARD':
       return state.concat(action.data);
+    case 'CLEAR_CARD':
+      return [];
     default:
       return state;
   }
@@ -34,5 +36,7 @@ export const createCard = (card: any) => async (dispatch: any) => {
     console.log(e);
   }
 };
+
+export const clearCard = () => ({ type: 'CLEAR_CARD' });
 
 export default cardReducer;

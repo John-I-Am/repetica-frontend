@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { setUser } from '../reducers/userReducer';
+import { initializeCards } from '../reducers/cardReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const LoginForm = () => {
 
     setEmail('');
     setPassword('');
+
+    // Temporary fix for cards loading before setuser & after home render
+    setTimeout(() => dispatch(initializeCards()), 200);
 
     // Temporary fix for login not redirecting to homepage due to dispatch not waiting
     setTimeout(() => history.push('/home'), 400);
