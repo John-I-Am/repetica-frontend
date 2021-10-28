@@ -1,18 +1,18 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/button-has-type */
-import { useHistory } from 'react-router';
+import Card from '../components/Card';
+import NavBar from '../components/NavBar';
 
 const HomePage = () => {
-  const history = useHistory();
-
-  const handleLogout = () => {
-    history.push('/login');
-    window.localStorage.removeItem('currentUser');
+  const homePageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    background: 'GhostWhite',
+    height: '100vh',
   };
 
   return (
-    <div>
-      <button onClick={handleLogout}>Logout</button>
+    <div style={homePageStyle}>
+      <Card />
+      <NavBar />
     </div>
   );
 };
