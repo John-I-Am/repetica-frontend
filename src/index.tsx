@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 import store from './store';
 import './index.css';
 // import App from './App';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
+import HomePage from './pages/HomePage/HomePage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import SignupPage from './pages/SignupPage/SignupPage';
 
 ReactDOM.render(
   <React.StrictMode>

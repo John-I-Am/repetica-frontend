@@ -1,4 +1,4 @@
-import SignupPage from './pages/SignupPage';
+import SignupPage from './pages/SignupPage/SignupPage';
 
 const App = () => (
   <div>

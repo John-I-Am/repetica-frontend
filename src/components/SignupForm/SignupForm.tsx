@@ -1,10 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import './style.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../reducers/userReducer';
+import { registerUser } from '../../reducers/userReducer';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -32,54 +33,9 @@ const SignupForm = () => {
     setTimeout(() => history.push('/home'), 400);
   };
 
-  const signupFormStyle = {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    alignItems: 'center',
-    height: '500px',
-    width: '450px',
-    marginTop: '10%',
-    borderRadius: '30px',
-    background: 'white',
-    boxShadow: '0px 3px 15px rgba(0,0,0,0.2)',
-  };
-
-  const formStyle = {
-    display: 'flex',
-    height: '100%',
-    width: '80%',
-    paddingLeft: '50px',
-    flexDirection: 'column' as 'column',
-    justifyContent: 'space-evenly',
-  };
-
-  const inputStyle = {
-    height: '40px',
-    width: '80%',
-    borderRadius: '30px',
-    border: 'none',
-    background: 'WhiteSmoke',
-    paddingLeft: '20px',
-  };
-
-  const innerForm = {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '20px',
-  };
-
-  const buttonStyle = {
-    height: '40px',
-    width: '87%',
-    fontSize: '16px',
-    borderRadius: '30px',
-    border: 'none',
-    background: 'orange',
-  };
-
   return (
-    <div style={signupFormStyle}>
-      <div>
+    <div id="signup-container">
+      <div id="header">
         <h1>Create Account</h1>
         <p>
           Already registered? Log in
@@ -88,13 +44,14 @@ const SignupForm = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSignup} style={formStyle}>
-        <div style={innerForm}>
+      <form onSubmit={handleSignup}>
+        <div id="innerForm">
           <div>
             <label htmlFor="name">First Name</label>
             <input
+              className="signup-input"
+              required
               onChange={({ target }) => setName(target.value)}
-              style={inputStyle}
               id="name"
               value={name}
               placeholder="name"
@@ -104,8 +61,8 @@ const SignupForm = () => {
           <div>
             <label htmlFor="surname">Surname</label>
             <input
+              className="signup-input"
               onChange={({ target }) => setSurname(target.value)}
-              style={inputStyle}
               id="surname"
               value={surname}
               placeholder="surname"
@@ -114,8 +71,8 @@ const SignupForm = () => {
           <div>
             <label htmlFor="email">Email Address</label>
             <input
+              className="signup-input"
               onChange={({ target }) => setEmail(target.value)}
-              style={inputStyle}
               id="email"
               value={email}
               placeholder="Email"
@@ -124,8 +81,8 @@ const SignupForm = () => {
           <div>
             <label htmlFor="password">Password</label>
             <input
+              className="signup-input"
               onChange={({ target }) => setPassword(target.value)}
-              style={inputStyle}
               id="password"
               type="password"
               value={password}
@@ -134,7 +91,7 @@ const SignupForm = () => {
           </div>
 
         </div>
-        <button style={buttonStyle} id="signup-button" type="submit">Signup</button>
+        <button id="signup-button" type="submit">Signup</button>
       </form>
     </div>
   );

@@ -2,38 +2,12 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable space-in-parens */
 /* eslint-disable no-unused-vars */
+import './style.css';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import dictionaryService from '../services/dictionary';
+import dictionaryService from '../../services/dictionary';
 
 const Card = () => {
-  const cardStyle = {
-    height: '400px',
-    width: '700px',
-    boxShadow: '0px 3px 15px rgba(0,0,0,0.2)',
-    background: 'white',
-    borderRadius: '20px',
-    marginTop: '100px',
-    marginLeft: '40px',
-  };
-
-  const frontStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '50%',
-    width: '100%',
-    borderBottom: '1px black solid',
-  };
-
-  const backStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '50%',
-    width: '100%',
-  };
-
   const cards = useSelector((state: any) => state.card);
   const [currentCard, setCurrentCard] = useState(0);
   const [front, setFront] = useState('null');
@@ -63,14 +37,14 @@ const Card = () => {
   };
 
   return (
-    <div style={cardStyle}>
-      <div style={frontStyle}>
+    <div id="card">
+      <div id="front">
         {front}
         <audio id="audio" controls>
           <source src={audio} type="audio/mp3" />
         </audio>
       </div>
-      <div style={backStyle}>
+      <div id="back">
         {back}
       </div>
       <button onClick={handleSearch}>

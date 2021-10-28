@@ -1,0 +1,6 @@
+#homePage {
+  display: flex;
+  justify-content: center;
+  background: ghostwhite;
+  height: 100vh;
+}

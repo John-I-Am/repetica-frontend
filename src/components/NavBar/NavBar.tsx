@@ -1,22 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/button-has-type */
+import './style.css';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { clearCard } from '../reducers/cardReducer';
-import { clearUser } from '../reducers/userReducer';
+import { clearCard } from '../../reducers/cardReducer';
+import { clearUser } from '../../reducers/userReducer';
 
 const NavBar = () => {
-  const navBarStyle = {
-    height: '100%',
-    width: '80px',
-    background: 'white',
-    boxShadow: '0px 3px 15px rgba(0,0,0,0.2)',
-    position: 'fixed' as 'fixed',
-    top: '0',
-    left: '0',
-    padding: '20px',
-  };
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -28,7 +18,7 @@ const NavBar = () => {
   };
 
   return (
-    <div style={navBarStyle}>
+    <div id="nav">
       <p>Home</p>
       <p>Trends</p>
       <p>DashBoard</p>
