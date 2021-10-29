@@ -4,12 +4,8 @@ import axios from 'axios';
 const baseUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
 const getDefinition = async (word: string) => {
-  try {
-    const response = await axios.get(`${baseUrl}${word}`);
-    return response.data;
-  } catch (e: any) {
-    console.log(e.response.data.error);
-  }
+  const response = await axios.get(`${baseUrl}${word}`);
+  return response.data;
 };
 
 export default { getDefinition };

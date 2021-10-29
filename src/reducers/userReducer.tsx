@@ -1,5 +1,6 @@
 import userService from '../services/users';
 import cardService from '../services/cards';
+import { setError } from './errorReducer';
 
 const userReducer = (state = null, action: any) => {
   switch (action.type) {
@@ -26,7 +27,11 @@ export const setUser = (user: any) => async (dispatch: any) => {
       type: 'SET_USER',
       data: currentUser,
     });
-  } catch (e) {
+  } catch (e: any) {
+    if ((e.response.data.error).includes('invalid email or pssword')) {
+      dispatch(setError('Incorrect Credentials'));
+      setTimeout(() => dispatch(setError('')), 4000);
+    }
     console.log(e);
   }
 };
@@ -36,6 +41,10 @@ export const registerUser = (newUser: any) => async (dispatch: any) => {
     await userService.register(newUser);
     dispatch(setUser(newUser));
   } catch (e: any) {
+    if ((e.response.data.error).includes('duplicate key error')) {
+      dispatch(setError('Email Taken'));
+      setTimeout(() => dispatch(setError('')), 4000);
+    }
     console.log(e);
   }
 };

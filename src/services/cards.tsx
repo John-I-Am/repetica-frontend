@@ -8,27 +8,19 @@ const setToken = (newToken: any) => {
 };
 
 const getAll = async () => {
-  try {
-    const config: any = {
-      headers: { Authorization: token },
-    };
-    const response = await axios.get('/api/cards', config);
-    return response.data;
-  } catch (e: any) {
-    console.log(e.response.data.error);
-  }
+  const config: any = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.get('/api/cards', config);
+  return response.data;
 };
 
 const create = async (newNote: any) => {
-  try {
-    const config: any = {
-      headers: { Authorization: token },
-    };
-    const response = await axios.post('/api/cards', newNote, config);
-    return response.data;
-  } catch (e: any) {
-    console.log(e.response.data.error);
-  }
+  const config: any = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.post('/api/cards', newNote, config);
+  return response.data;
 };
 
 export default { setToken, getAll, create };
