@@ -2,18 +2,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './style.css';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { registerUser } from '../../reducers/userReducer';
+import { setError } from '../../reducers/errorReducer';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state: any) => state.error);
   const history = useHistory();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const delayedLogin = () => {
     if (window.localStorage.getItem('currentUser')) {
@@ -24,19 +27,21 @@ const SignupForm = () => {
   const handleSignup = (event: any) => {
     event.preventDefault();
 
-    dispatch(registerUser({
-      name,
-      surname,
-      email,
-      password,
-    }));
+    if (password === confirmPassword) {
+      dispatch(registerUser({
+        name,
+        surname,
+        email,
+        password,
+      }));
 
-    setTimeout(delayedLogin, 500);
-
-    setName('');
-    setSurname('');
-    setEmail('');
-    setPassword('');
+      setTimeout(delayedLogin, 500);
+    } else {
+      setPassword('');
+      setConfirmPassword('');
+      dispatch(setError('Passwords do not match'));
+      setInterval(() => dispatch(setError('')), 4000);
+    }
   };
 
   return (
@@ -52,29 +57,33 @@ const SignupForm = () => {
 
       <form onSubmit={handleSignup}>
         <div id="innerForm">
-          <div>
-            <label htmlFor="name">First Name</label>
-            <input
-              className="signup-input"
-              required
-              onChange={({ target }) => setName(target.value)}
-              id="name"
-              value={name}
-              placeholder="name"
-            />
+
+          <div id="name-input">
+            <div>
+              <label htmlFor="name">First Name</label>
+              <input
+                className="signup-input"
+                required
+                onChange={({ target }) => setName(target.value)}
+                id="name"
+                value={name}
+                placeholder="Name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="surname">Surname</label>
+              <input
+                className="signup-input"
+                required
+                onChange={({ target }) => setSurname(target.value)}
+                id="surname"
+                value={surname}
+                placeholder="Surname"
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="surname">Surname</label>
-            <input
-              className="signup-input"
-              required
-              onChange={({ target }) => setSurname(target.value)}
-              id="surname"
-              value={surname}
-              placeholder="surname"
-            />
-          </div>
           <div>
             <label htmlFor="email">Email Address</label>
             <input
@@ -97,13 +106,30 @@ const SignupForm = () => {
               id="password"
               type="password"
               value={password}
-              placeholder="password"
+              placeholder="Password"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <input
+              className="signup-input"
+              required
+              minLength={8}
+              onChange={({ target }) => setConfirmPassword(target.value)}
+              id="confirm-password"
+              type="password"
+              value={confirmPassword}
+              placeholder="Confirm Password"
             />
           </div>
         </div>
-        <button id="signup-button" type="submit">Signup</button>
+        <button id="signup-button" type="submit">Sign up</button>
+        <div id="error">
+          {error}
+        </div>
       </form>
-      asdfsdf
+
     </div>
   );
 };

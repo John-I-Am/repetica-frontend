@@ -22,11 +22,32 @@
 
 #signup-container form {
   display: flex;
+  gap: 12px;
   height: 80%;
   width: 80%;
   flex-direction: column;
   justify-content: space-evenly;
-  padding-bottom: 40px;
+}
+
+#signup-container label {
+  font-size: 12px;
+  padding: 20px;
+}
+
+#name {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#surname {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+#name-input {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .signup-input {
@@ -39,12 +60,16 @@
   padding-left: 20px;
 }
 
-/* input:invalid {
-  border: 2px dashed red;
+.signup-input::placeholder {
+  font-style: italic;
 }
 
-input:valid {
-  border: 2px solid green;
+/* input:invalid {
+  border: 1px solid red;
+} */
+
+/* input:valid {
+  border: 1px solid green;
 } */
 
 #innerForm {
@@ -60,4 +85,10 @@ input:valid {
   border-radius: 10px;
   border: none;
   background: orange;
+}
+
+#error {
+  color: red;
+  font-size: 12px;
+  text-align: center;
 }

@@ -2,14 +2,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './style.css';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../reducers/userReducer';
 import { initializeCards } from '../../reducers/cardReducer';
+// import { setError } from '../../reducers/errorReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state: any) => state.error);
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,7 +41,7 @@ const LoginForm = () => {
       <div id="header">
         <h1>Login</h1>
         <p>
-          Not a member? signup
+          Not a member? Signup
           {' '}
           <Link to="/register">here </Link>
         </p>
@@ -68,12 +70,15 @@ const LoginForm = () => {
               id="password"
               type="password"
               value={password}
-              placeholder="password"
+              placeholder="Password"
             />
           </div>
 
         </div>
         <button id="login-button" type="submit">Login</button>
+        <div id="error">
+          {error}
+        </div>
       </form>
     </div>
   );

@@ -21,11 +21,16 @@
 
 #login-container form {
   display: flex;
+  gap: 12px;
   height: 80%;
   width: 80%;
   flex-direction: column;
   justify-content: space-evenly;
-  padding-bottom: 40px;
+}
+
+#login-container label {
+  font-size: 12px;
+  padding: 20px;
 }
 
 .login-input {
@@ -36,6 +41,10 @@
   background: whitesmoke;
   box-sizing: border-box;
   padding-left: 20px;
+}
+
+.login-input::placeholder {
+  font-style: italic;
 }
 
 #login-container #innerForm {
