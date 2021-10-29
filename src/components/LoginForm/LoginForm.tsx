@@ -14,6 +14,13 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const delayedLogin = () => {
+    if (window.localStorage.getItem('currentUser')) {
+      setTimeout(() => history.push('/home'), 400);
+      setTimeout(() => dispatch(initializeCards()), 200);
+    }
+  };
+
   const handleLogin = (event: any) => {
     event.preventDefault();
     dispatch(setUser({
@@ -21,14 +28,10 @@ const LoginForm = () => {
       password,
     }));
 
+    setTimeout(delayedLogin, 500);
+
     setEmail('');
     setPassword('');
-
-    // Temporary fix for cards loading before setuser & after home render
-    setTimeout(() => dispatch(initializeCards()), 200);
-
-    // Temporary fix for login not redirecting to homepage due to dispatch not waiting
-    setTimeout(() => history.push('/home'), 400);
   };
 
   return (
@@ -50,6 +53,7 @@ const LoginForm = () => {
             <label htmlFor="email">Email Address</label>
             <input
               className="login-input"
+              type="email"
               onChange={({ target }) => setEmail(target.value)}
               id="email"
               value={email}

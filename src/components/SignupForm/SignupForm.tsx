@@ -15,8 +15,15 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const delayedLogin = () => {
+    if (window.localStorage.getItem('currentUser')) {
+      setTimeout(() => history.push('/home'), 400);
+    }
+  };
+
   const handleSignup = (event: any) => {
     event.preventDefault();
+
     dispatch(registerUser({
       name,
       surname,
@@ -24,13 +31,12 @@ const SignupForm = () => {
       password,
     }));
 
+    setTimeout(delayedLogin, 500);
+
     setName('');
     setSurname('');
     setEmail('');
     setPassword('');
-
-    // Temporary fix for login not redirecting to homepage due to dispatch not waiting
-    setTimeout(() => history.push('/home'), 400);
   };
 
   return (
@@ -62,6 +68,7 @@ const SignupForm = () => {
             <label htmlFor="surname">Surname</label>
             <input
               className="signup-input"
+              required
               onChange={({ target }) => setSurname(target.value)}
               id="surname"
               value={surname}
@@ -72,6 +79,8 @@ const SignupForm = () => {
             <label htmlFor="email">Email Address</label>
             <input
               className="signup-input"
+              required
+              type="email"
               onChange={({ target }) => setEmail(target.value)}
               id="email"
               value={email}
@@ -82,6 +91,8 @@ const SignupForm = () => {
             <label htmlFor="password">Password</label>
             <input
               className="signup-input"
+              required
+              minLength={8}
               onChange={({ target }) => setPassword(target.value)}
               id="password"
               type="password"
@@ -89,10 +100,10 @@ const SignupForm = () => {
               placeholder="password"
             />
           </div>
-
         </div>
         <button id="signup-button" type="submit">Signup</button>
       </form>
+      asdfsdf
     </div>
   );
 };
