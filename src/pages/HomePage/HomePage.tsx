@@ -17,7 +17,7 @@ const HomePage = () => {
     event.preventDefault();
     try {
       const response: any = await dictionaryService.getDefinition(text);
-      const stringifiedResponse = JSON.stringify(response[0].meanings);
+      const stringifiedResponse = JSON.stringify(response[0]);
 
       const card = {
         front: text,

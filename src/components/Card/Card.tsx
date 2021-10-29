@@ -15,13 +15,6 @@ const Card = () => {
     }
   };
 
-  // const getAudio = () => {
-  //   const temp = JSON.parse(cards[currentCard].back);
-  //   console.log(temp.phonetics[0].audio);
-  //   const temp2 = (temp.phonetics[0].audio);
-  //   return temp2;
-  // };
-
   const play = () => {
     const audio: any = document.getElementById('audio');
     audio.play();
@@ -34,14 +27,14 @@ const Card = () => {
         <svg onClick={play} width="24" height="24" fill="grey" viewBox="0 0 24 24">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.25 12L5.75 5.75V18.25L18.25 12Z" />
         </svg>
-        <audio id="audio" src={`//ssl.gstatic.com/dictionary/static/sounds/20200429/${cards[currentCard].front}--_gb_1.mp3`} />
+        <audio id="audio" src={(JSON.parse(cards[currentCard].back).phonetics[0].audio)} />
       </div>
 
       <div id="front">
         {cards[currentCard].front}
       </div>
       <div id="back">
-        {JSON.parse(cards[currentCard].back).map((ele: any) => (
+        {(JSON.parse(cards[currentCard].back).meanings).map((ele: any) => (
           <div id="card-definition">
             {ele.definitions[0].definition}
           </div>
