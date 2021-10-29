@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import './style.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,6 +10,7 @@ import cardless from '../../assets/cardless.png';
 
 const HomePage = () => {
   const cards = useSelector((state: any) => state.card);
+  const cardsToStudy = cards.filter((card: any) => (new Date(card.checkpointDate)).getTime() <= new Date().getTime());
   const [text, setText] = useState('');
 
   const dispatch = useDispatch();
@@ -24,7 +26,6 @@ const HomePage = () => {
         back: stringifiedResponse,
         level: 1,
       };
-
       dispatch(createCard(card));
     } catch {
       alert('Error adding card');
@@ -40,7 +41,7 @@ const HomePage = () => {
 
   return (
     <div id="homePage">
-      {cards.length !== 0 ? <Card /> : noCards()}
+      {cardsToStudy.length !== 0 ? <Card /> : noCards()}
       <form onSubmit={handleSubmit}>
         <input onChange={({ target }) => setText(target.value)} />
       </form>
