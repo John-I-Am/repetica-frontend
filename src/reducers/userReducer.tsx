@@ -35,7 +35,7 @@ export const registerUser = (newUser: any) => async (dispatch: any) => {
   try {
     await userService.register(newUser);
     dispatch(setUser(newUser));
-  } catch (e) {
+  } catch (e: any) {
     console.log(e);
   }
 };

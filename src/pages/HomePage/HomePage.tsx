@@ -15,27 +15,28 @@ const HomePage = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const response: any = await dictionaryService.getDefinition(text);
-    const stringifiedResponse = JSON.stringify(response[0].meanings);
+    try {
+      const response: any = await dictionaryService.getDefinition(text);
+      const stringifiedResponse = JSON.stringify(response[0].meanings);
 
-    const card = {
-      front: text,
-      back: stringifiedResponse,
-      level: 1,
-    };
+      const card = {
+        front: text,
+        back: stringifiedResponse,
+        level: 1,
+      };
 
-    dispatch(createCard(card));
+      dispatch(createCard(card));
+    } catch {
+      alert('Error adding card');
+    }
   };
-  const noCards = () => {
-    console.log('');
-    return (
-      <div>
-        <p>NO CARDS FOUND, DOG ATE YOUR HOMEWORK?</p>
-        <img height="600px" src={cardless} alt="idk" />
-      </div>
+  const noCards = () => (
+    <div>
+      <p>NO CARDS FOUND, DOG ATE YOUR HOMEWORK?</p>
+      <img height="600px" src={cardless} alt="idk" />
+    </div>
 
-    );
-  };
+  );
 
   return (
     <div id="homePage">
