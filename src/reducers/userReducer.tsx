@@ -11,6 +11,9 @@ const userReducer = (state = null, action: any) => {
     case 'CLEAR_USER':
       window.localStorage.clear();
       return null;
+    case 'SET_FROM_LOCAL':
+      cardService.setToken(action.data.token);
+      return action.data;
     default:
       return state;
   }
@@ -35,6 +38,11 @@ export const setUser = (user: any) => async (dispatch: any) => {
     console.log(e);
   }
 };
+
+export const setFromLocal = (user: any) => ({
+  type: 'SET_FROM_LOCAL',
+  data: user,
+});
 
 export const registerUser = (newUser: any) => async (dispatch: any) => {
   try {

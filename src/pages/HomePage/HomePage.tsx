@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 import './style.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import dictionaryService from '../../services/dictionary';
-import { createCard } from '../../reducers/cardReducer';
+import { createCard, initializeCards } from '../../reducers/cardReducer';
 import Card from '../../components/Card/Card';
 import NavBar from '../../components/NavBar/NavBar';
 import cardless from '../../assets/cardless.png';
+import { setFromLocal } from '../../reducers/userReducer';
 
 const HomePage = () => {
   const cards = useSelector((state: any) => state.card);
@@ -14,6 +15,15 @@ const HomePage = () => {
   const [text, setText] = useState('');
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const currentUser = window.localStorage.getItem('currentUser');
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      dispatch(setFromLocal(user));
+      dispatch(initializeCards());
+    }
+  }, []);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
