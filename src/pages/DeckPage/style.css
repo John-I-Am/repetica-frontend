@@ -1,0 +1,9 @@
+#deckPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: ghostwhite;
+  height: 100vh;
+  padding-left: 100px;
+  padding-right: 40px;
+}

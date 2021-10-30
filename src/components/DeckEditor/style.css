@@ -1,0 +1,14 @@
+.deck-editor {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.deck-editor input {
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid black;
+  background: white;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
