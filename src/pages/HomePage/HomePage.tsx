@@ -1,62 +1,15 @@
-/* eslint-disable max-len */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/button-has-type */
 import './style.css';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import dictionaryService from '../../services/dictionary';
-import { createCard, initializeCards } from '../../reducers/cardReducer';
-import Card from '../../components/Card/Card';
-import NavBar from '../../components/NavBar/NavBar';
-import cardless from '../../assets/cardless.png';
-import { setFromLocal } from '../../reducers/userReducer';
+import { useHistory } from 'react-router';
 
 const HomePage = () => {
-  const cards = useSelector((state: any) => state.card);
-  const cardsToStudy = cards.filter((card: any) => (new Date(card.checkpointDate)).getTime() <= new Date().getTime());
-  const [text, setText] = useState('');
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const currentUser = window.localStorage.getItem('currentUser');
-    if (currentUser) {
-      const user = JSON.parse(currentUser);
-      dispatch(setFromLocal(user));
-      dispatch(initializeCards());
-    }
-  }, []);
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    try {
-      const response: any = await dictionaryService.getDefinition(text);
-      const stringifiedResponse = JSON.stringify(response[0]);
-
-      const card = {
-        front: text,
-        back: stringifiedResponse,
-        level: 1,
-      };
-      dispatch(createCard(card));
-    } catch {
-      alert('Error adding card');
-    }
-  };
-  const noCards = () => (
-    <div>
-      <p>NO CARDS FOUND, DOG ATE YOUR HOMEWORK?</p>
-      <img height="600px" src={cardless} alt="idk" />
-    </div>
-
-  );
-
+  const history = useHistory();
   return (
-    <div id="homePage">
-      {cardsToStudy.length !== 0 ? <Card /> : noCards()}
-      <form onSubmit={handleSubmit}>
-        <input onChange={({ target }) => setText(target.value)} />
-      </form>
-
-      <NavBar />
+    <div>
+      Work in Progress, please jump straight to login / Register Page
+      <button onClick={() => history.push('/login')}>Login</button>
+      <button onClick={() => history.push('/register')}>Register</button>
     </div>
   );
 };

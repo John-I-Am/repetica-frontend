@@ -7,19 +7,26 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import './index.css';
-// import App from './App';
-import HomePage from './pages/HomePage/HomePage';
+import DashboardPage from './pages/DashboardPage/DashboardPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import HomePage from './pages/HomePage/HomePage';
+import DeckPage from './pages/DeckPage/DeckPage';
+import TrendsPage from './pages/TrendsPage/TrendsPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route path="/home" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <HomePage />)} />
-          <Route path="/login" render={() => (window.localStorage.getItem('currentUser') === null ? <LoginPage /> : <Redirect to="/home" />)} />
-          <Route path="/register" render={() => (window.localStorage.getItem('currentUser') === null ? <SignupPage /> : <Redirect to="/home" />)} />
+          <Route path="/profile" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <ProfilePage />)} />
+          <Route path="/trends" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <TrendsPage />)} />
+          <Route path="/deck" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <DeckPage />)} />
+          <Route path="/dashboard" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <DashboardPage />)} />
+          <Route path="/login" render={() => (window.localStorage.getItem('currentUser') === null ? <LoginPage /> : <Redirect to="/dashboard" />)} />
+          <Route path="/register" render={() => (window.localStorage.getItem('currentUser') === null ? <SignupPage /> : <Redirect to="/dashboard" />)} />
+          <Route path="/" render={() => <HomePage />} />
         </Switch>
       </BrowserRouter>
     </Provider>

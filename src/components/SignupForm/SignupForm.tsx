@@ -20,7 +20,7 @@ const SignupForm = () => {
 
   const delayedLogin = () => {
     if (window.localStorage.getItem('currentUser')) {
-      setTimeout(() => history.push('/home'), 400);
+      setTimeout(() => history.push('/dashboard'), 400);
     }
   };
 
