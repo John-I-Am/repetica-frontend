@@ -4,3 +4,11 @@
   background: ghostwhite;
   height: 100vh;
 }
+
+.cardless img {
+  height: 500px;
+}
+
+.cardless b {
+  color: #c87aff;
+}
