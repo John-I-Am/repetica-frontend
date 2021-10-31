@@ -2,8 +2,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/media-has-caption */
 import './style.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { updateCard } from '../../reducers/cardReducer';
 // import { useHistory } from 'react-router';
 
 const Card = () => {
@@ -12,12 +13,26 @@ const Card = () => {
   const cardsToStudy = cards.filter((card: any) => (new Date(card.checkpointDate)).getTime() <= new Date().getTime());
   const [currentCard, setCurrentCard] = useState(0);
   // const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handleGetNext = async () => {
-    if (currentCard === cards.length - 1) {
+  const handleIncorrect = async () => {
+    if (currentCard === cardsToStudy.length - 1) {
+      dispatch(updateCard(cardsToStudy[currentCard]));
       console.log('outta bound');
       // history.push('/home');
     } else {
+      dispatch(updateCard(cardsToStudy[currentCard]));
+      setCurrentCard(currentCard + 1);
+    }
+  };
+
+  const handleCorrect = async () => {
+    if (currentCard === cardsToStudy.length - 1) {
+      dispatch(updateCard(cardsToStudy[currentCard]));
+      console.log('outta bound');
+      // history.push('/home');
+    } else {
+      dispatch(updateCard(cardsToStudy[currentCard]));
       setCurrentCard(currentCard + 1);
     }
   };
@@ -59,7 +74,8 @@ const Card = () => {
         ))}
       </div>
 
-      <button type="button" onClick={handleGetNext}>Next Card</button>
+      <button type="button" onClick={handleIncorrect}>Incorrect</button>
+      <button type="button" onClick={handleCorrect}>Correct</button>
     </div>
   );
 };

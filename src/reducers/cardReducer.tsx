@@ -6,6 +6,8 @@ const cardReducer = (state = [], action: any) => {
       return action.data;
     case 'CREATE_CARD':
       return state.concat(action.data);
+    case 'UPDATE_CARD':
+      return state.concat(action.data);
     case 'CLEAR_CARD':
       return [];
     default:
@@ -31,6 +33,18 @@ export const createCard = (card: any) => async (dispatch: any) => {
     dispatch({
       type: 'CREATE_CARD',
       data: newCard,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateCard = (cardToUpdate: any) => async (dispatch: any) => {
+  try {
+    const updatedCard = await cardsService.update(cardToUpdate);
+    dispatch({
+      type: 'UPDATE_CARD',
+      data: updatedCard,
     });
   } catch (e) {
     console.log(e);

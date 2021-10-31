@@ -15,12 +15,22 @@ const getAll = async () => {
   return response.data;
 };
 
-const create = async (newNote: any) => {
+const create = async (newCard: any) => {
   const config: any = {
     headers: { Authorization: token },
   };
-  const response = await axios.post('/api/cards', newNote, config);
+  const response = await axios.post('/api/cards', newCard, config);
   return response.data;
 };
 
-export default { setToken, getAll, create };
+const update = async (updatedCard: any) => {
+  const config: any = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.put(`/api/cards/${updatedCard.id}`, updatedCard, config);
+  return response.data;
+};
+
+export default {
+  setToken, getAll, create, update,
+};
