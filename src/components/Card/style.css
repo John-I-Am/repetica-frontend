@@ -4,7 +4,7 @@
   box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
   background: white;
   border-radius: 20px;
-  margin: 100px 0px 0px 120px;
+  margin-bottom: 20%;
   padding: 20px;
 }
 
@@ -30,10 +30,42 @@
   border-bottom: 1px black solid;
 }
 
+#front input{
+  border: none;
+  border-bottom: 1px #c87aff solid;
+  justify-content: center;
+  color: purple;
+  text-align: center;
+  font-size: 50px;
+  background:  #f0f0f5
+}
+
+#front input:focus {
+  outline: none;
+}
+
 #back {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50%;
+}
+
+#card-definition {
+  display: flex;
+  font-size: 14px;
   width: 100%;
+  align-items: flex-start;
+  height: 100%;
+  padding: 20px;
+  margin-top: 5%;
+}
+
+#example {
+  font-style: italic;
+  display: none;
+}
+
+#partOfSpeech {
+  color: darkorange;
 }

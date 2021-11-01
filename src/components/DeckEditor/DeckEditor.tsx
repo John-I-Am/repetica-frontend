@@ -19,7 +19,7 @@ const DeckEditor = () => {
       const card = {
         front: text,
         back: stringifiedResponse,
-        level: 1,
+        level: 0,
       };
       dispatch(createCard(card));
     } catch {

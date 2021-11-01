@@ -1,39 +1,71 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/media-has-caption */
 import './style.css';
-import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateCard } from '../../reducers/cardReducer';
-// import { useHistory } from 'react-router';
 
 const Card = () => {
   const cards = useSelector((state: any) => state.card);
-  // eslint-disable-next-line max-len
-  const cardsToStudy = cards.filter((card: any) => (new Date(card.checkpointDate)).getTime() <= new Date().getTime());
-  const [currentCard, setCurrentCard] = useState(0);
-  // const history = useHistory();
+  const cardsToStudy = cards.filter((card: any) => (
+    new Date(card.checkpointDate)).getTime() <= new Date().getTime());
   const dispatch = useDispatch();
+  const [guess, setGuess] = useState('');
+
+  const handleStyling = (result: boolean) => {
+    const word: any = document.getElementById('guess');
+    word.disabled = true;
+
+    const example: any = document.getElementById('example');
+    example.style.display = 'inline';
+
+    if (result) {
+      word.style.color = 'green';
+    } else {
+      word.style.color = 'red';
+      setGuess(cardsToStudy[0].front);
+    }
+
+    setTimeout(() => example.style.display = 'none', 2000);
+    setTimeout(() => word.disabled = false, 2000);
+    setTimeout(() => setGuess(''), 2000);
+    setTimeout(() => word.style.color = 'purple', 2000);
+  };
 
   const handleIncorrect = async () => {
-    if (currentCard === cardsToStudy.length - 1) {
-      dispatch(updateCard(cardsToStudy[currentCard]));
-      console.log('outta bound');
-      // history.push('/home');
+    let updatedCard: any;
+    if (cardsToStudy[0].level === 0) {
+      updatedCard = { ...cardsToStudy[0], level: 0 };
     } else {
-      dispatch(updateCard(cardsToStudy[currentCard]));
-      setCurrentCard(currentCard + 1);
+      updatedCard = { ...cardsToStudy[0], level: cardsToStudy[0].level - 1 };
     }
+
+    handleStyling(false);
+    setTimeout(() => dispatch(updateCard(updatedCard)), 2000);
   };
 
   const handleCorrect = async () => {
-    if (currentCard === cardsToStudy.length - 1) {
-      dispatch(updateCard(cardsToStudy[currentCard]));
-      console.log('outta bound');
-      // history.push('/home');
+    let updatedCard: any;
+    if (cardsToStudy[0].level === 5) {
+      updatedCard = { ...cardsToStudy[0], level: 5 };
     } else {
-      dispatch(updateCard(cardsToStudy[currentCard]));
-      setCurrentCard(currentCard + 1);
+      updatedCard = { ...cardsToStudy[0], level: cardsToStudy[0].level + 1 };
+    }
+
+    handleStyling(true);
+    setTimeout(() => dispatch(updateCard(updatedCard)), 2000);
+  };
+
+  const handleGuess = async (event: any) => {
+    event.preventDefault();
+    const answer = (cardsToStudy[0].front).toLowerCase();
+    if (answer === guess.toLowerCase()) {
+      handleCorrect();
+    } else {
+      handleIncorrect();
     }
   };
 
@@ -43,7 +75,7 @@ const Card = () => {
   };
 
   const renderAudio = () => {
-    const phonetics = JSON.parse(cardsToStudy[currentCard].back).phonetics[0];
+    const phonetics = JSON.parse(cardsToStudy[0].back).phonetics[0];
     if (phonetics !== undefined && 'audio' in phonetics) {
       return (
         <div>
@@ -59,23 +91,34 @@ const Card = () => {
   return (
     <div id="card">
       <div id="card-header">
-        {`Level ${cardsToStudy[currentCard].level}`}
+        {`Level ${cardsToStudy[0].level}`}
         {renderAudio()}
       </div>
 
       <div id="front">
-        {cardsToStudy[currentCard].front}
+        <form onSubmit={handleGuess}>
+          <input id="guess" value={guess} onChange={({ target }) => setGuess(target.value)} />
+        </form>
       </div>
       <div id="back">
-        {(JSON.parse(cardsToStudy[currentCard].back).meanings).map((ele: any) => (
+        {(JSON.parse(cardsToStudy[0].back).meanings).map((ele: any) => (
           <div id="card-definition">
-            {ele.definitions[0].definition}
+            <div id="partOfSpeech">
+              {ele.partOfSpeech}
+            </div>
+            <p>
+              {' '}
+              {ele.definitions[0].definition}
+            </p>
+
+            <p id="example">
+              {' '}
+              {ele.definitions[0].example}
+            </p>
+
           </div>
         ))}
       </div>
-
-      <button type="button" onClick={handleIncorrect}>Incorrect</button>
-      <button type="button" onClick={handleCorrect}>Correct</button>
     </div>
   );
 };

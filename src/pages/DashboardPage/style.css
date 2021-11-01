@@ -1,14 +1,21 @@
 #dashboardPage {
   display: flex;
   justify-content: center;
+  align-items: center;
   background: ghostwhite;
   height: 100vh;
+  padding-left: 60px;
 }
 
 .cardless img {
-  height: 500px;
+  width: 100%;
+  height: auto;
 }
 
 .cardless b {
   color: #c87aff;
+}
+
+.cardless b:first-child {
+  color: orange;
 }
