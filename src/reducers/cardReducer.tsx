@@ -6,8 +6,11 @@ const cardReducer = (state = [], action: any) => {
       return action.data;
     case 'CREATE_CARD':
       return state.concat(action.data);
-    case 'UPDATE_CARD':
-      return state.concat(action.data);
+    case 'UPDATE_CARD': {
+      const newState: any = state.map((card: any) => (
+        card.id === action.data.id ? action.data : card));
+      return newState;
+    }
     case 'CLEAR_CARD':
       return [];
     default:
