@@ -1,16 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-extraneous-dependencies */
 import './style.css';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearCard } from '../../reducers/cardReducer';
 import { clearUser } from '../../reducers/userReducer';
 
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const cards = useSelector((state: any) => state.card);
+  const cardsToStudy = cards.filter((card: any) => (
+    new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
   const handleLogout = () => {
     window.localStorage.removeItem('currentUser');
@@ -21,7 +26,9 @@ const NavBar = () => {
 
   const handleMouseEnter = (id: any) => {
     const element: any = document.getElementById(id);
-    element.className = 'active';
+    if (id !== 'cards-due' && id !== 'total-cards') {
+      element.className = 'active';
+    }
 
     const toast: any = document.getElementById('toast');
     toast.style.visibility = 'visible';
@@ -29,23 +36,31 @@ const NavBar = () => {
 
     switch (id) {
       case 'dashboard-nav':
-        toast.style.top = '20px';
+        toast.style.top = '10px';
         toast.textContent = 'Learn';
         return null;
       case 'trend-nav':
-        toast.style.top = '100px';
+        toast.style.top = '90px';
         toast.textContent = 'Trends';
         return null;
       case 'deck-nav':
-        toast.style.top = '180px';
+        toast.style.top = '160px';
         toast.textContent = 'Decks';
         return null;
       case 'profile-nav':
-        toast.style.top = '260px';
+        toast.style.top = '240px';
         toast.textContent = 'Profile';
         return null;
+      case 'cards-due':
+        toast.style.top = '480px';
+        toast.textContent = 'cards due';
+        return null;
+      case 'total-cards':
+        toast.style.top = '520px';
+        toast.textContent = 'total cards';
+        return null;
       case 'logout':
-        toast.style.top = '720px';
+        toast.style.top = '770px';
         toast.textContent = 'Logout';
         return null;
       default:
@@ -66,7 +81,7 @@ const NavBar = () => {
       <div id="toast" />
       <div id="navMain">
 
-        <NavLink activeClassName="active-nav" to="/dashboard">
+        <NavLink activeClassName="active" to="/dashboard">
           <div id="dashboard-nav" onMouseEnter={() => handleMouseEnter('dashboard-nav')} onMouseLeave={() => handleMouseLeave('dashboard-nav')}>
             <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6.75024 19.2502H17.2502C18.3548 19.2502 19.2502 18.3548 19.2502 17.2502V9.75025L12.0002 4.75024L4.75024 9.75025V17.2502C4.75024 18.3548 5.64568 19.2502 6.75024 19.2502Z" />
@@ -75,7 +90,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName="active-nav" to="/trends">
+        <NavLink activeClassName="active" to="/trends">
           <div id="trend-nav" onMouseEnter={() => handleMouseEnter('trend-nav')} onMouseLeave={() => handleMouseLeave('trend-nav')}>
             <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.75 11.25L10.25 5.75" />
@@ -87,7 +102,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName="active-nav" to="/deck">
+        <NavLink activeClassName="active" to="/deck">
           <div id="deck-nav" onMouseEnter={() => handleMouseEnter('deck-nav')} onMouseLeave={() => handleMouseLeave('deck-nav')}>
             <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.25 5.75C19.25 5.19772 18.8023 4.75 18.25 4.75H14C12.8954 4.75 12 5.64543 12 6.75V19.25L12.8284 18.4216C13.5786 17.6714 14.596 17.25 15.6569 17.25H18.25C18.8023 17.25 19.25 16.8023 19.25 16.25V5.75Z" />
@@ -96,7 +111,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName="active-nav" to="/profile">
+        <NavLink activeClassName="active" to="/profile">
           <div id="profile-nav" onMouseEnter={() => handleMouseEnter('profile-nav')} onMouseLeave={() => handleMouseLeave('profile-nav')}>
             <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
               <circle cx="12" cy="8" r="3.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
@@ -104,6 +119,11 @@ const NavBar = () => {
             </svg>
           </div>
         </NavLink>
+      </div>
+
+      <div>
+        <p onMouseEnter={() => handleMouseEnter('cards-due')} id="cards-due">{cardsToStudy.length}</p>
+        <p onMouseEnter={() => handleMouseEnter('total-cards')} id="total-cards">{cards.length}</p>
       </div>
 
       <div onClick={handleLogout} id="logout" onMouseEnter={() => handleMouseEnter('logout')} onMouseLeave={() => handleMouseLeave('logout')}>
