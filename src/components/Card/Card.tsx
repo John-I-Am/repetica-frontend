@@ -1,17 +1,17 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
+/* eslint-disable no-return-assign */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/media-has-caption */
 import './style.css';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateCard } from '../../reducers/cardReducer';
 
-const Card = () => {
-  const cards = useSelector((state: any) => state.card);
-  const cardsToStudy = cards.filter((card: any) => (
-    new Date(card.checkpointDate)).getTime() <= new Date().getTime());
+interface CardProps {
+  cardsToStudy: Array<any>;
+}
+
+const Card = ({ cardsToStudy }: CardProps) => {
   const dispatch = useDispatch();
   const [guess, setGuess] = useState('');
 
