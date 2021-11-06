@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import './style.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,7 +29,8 @@ const Cardless = ({ totalCards, activeCards }: CardlessProps) => (
 
 const DashboardPage = () => {
   const cards = useSelector((state: any) => state.card);
-  const cardsToStudy = cards.filter((card: any) => (new Date(card.checkpointDate)).getTime() <= new Date().getTime());
+  const cardsToStudy = cards.filter((card: any) => (
+    new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
   const dispatch = useDispatch();
 
@@ -45,7 +45,8 @@ const DashboardPage = () => {
 
   return (
     <div id="dashboardPage">
-      {cardsToStudy.length !== 0 ? <Card /> : <Cardless totalCards={cards.length} activeCards={cardsToStudy.length} />}
+      {cardsToStudy.length !== 0 ? <Card cardsToStudy={cardsToStudy} />
+        : <Cardless totalCards={cards.length} activeCards={cardsToStudy.length} />}
       <NavBar />
     </div>
   );
