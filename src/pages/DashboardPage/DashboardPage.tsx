@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { initializeCards } from '../../reducers/cardReducer';
 import Card from '../../components/Card/Card';
-import NavBar from '../../components/NavBar/NavBar';
+import SideBar from '../../components/SideBar/SideBar';
 import cardless from '../../assets/cardless.svg';
 import { setFromLocal } from '../../reducers/userReducer';
 
@@ -15,13 +15,13 @@ interface CardlessProps {
 const Cardless = ({ totalCards, activeCards }: CardlessProps) => (
   <div className="cardless">
     <img src={cardless} alt="empty deck" />
-    <h1>No Cards ;()</h1>
+    <h1>All Done :)</h1>
     <div>
       <h2>
         <b>{activeCards}</b>
-        {' Cards Ready For Review Out Of '}
+        {' Cards Due For Review Out of '}
         <b>{totalCards}</b>
-        {' Cards.'}
+        {' Cards Total.'}
       </h2>
     </div>
   </div>
@@ -44,10 +44,10 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div id="dashboardPage">
+    <div className="dashboard-page">
       {cardsToStudy.length !== 0 ? <Card cardsToStudy={cardsToStudy} />
         : <Cardless totalCards={cards.length} activeCards={cardsToStudy.length} />}
-      <NavBar />
+      <SideBar />
     </div>
   );
 };

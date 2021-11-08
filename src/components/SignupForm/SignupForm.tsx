@@ -1,6 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './style.css';
+import Button from 'react-bootstrap/Button';
+
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -45,8 +47,8 @@ const SignupForm = () => {
   };
 
   return (
-    <div id="signup-container">
-      <div id="header">
+    <div className="signup-container">
+      <div className="signup-container__header">
         <h1>Create Account</h1>
         <p>
           Already registered? Log in
@@ -56,80 +58,72 @@ const SignupForm = () => {
       </div>
 
       <form onSubmit={handleSignup}>
-        <div id="innerForm">
-
-          <div id="name-input">
-            <div>
-              <label htmlFor="name">First Name</label>
-              <input
-                className="signup-input"
-                required
-                onChange={({ target }) => setName(target.value)}
-                id="name"
-                value={name}
-                placeholder="Name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="surname">Surname</label>
-              <input
-                className="signup-input"
-                required
-                onChange={({ target }) => setSurname(target.value)}
-                id="surname"
-                value={surname}
-                placeholder="Surname"
-              />
-            </div>
-          </div>
-
+        <div className="name-input">
           <div>
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="name">First Name</label>
             <input
-              className="signup-input"
               required
-              type="email"
-              onChange={({ target }) => setEmail(target.value)}
-              id="email"
-              value={email}
-              placeholder="Email"
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              className="signup-input"
-              required
-              minLength={8}
-              onChange={({ target }) => setPassword(target.value)}
-              id="password"
-              type="password"
-              value={password}
-              placeholder="Password"
+              onChange={({ target }) => setName(target.value)}
+              id="name"
+              value={name}
+              placeholder="Name"
             />
           </div>
 
           <div>
-            <label htmlFor="confirm-password">Confirm Password</label>
+            <label htmlFor="surname">Surname</label>
             <input
-              className="signup-input"
               required
-              minLength={8}
-              onChange={({ target }) => setConfirmPassword(target.value)}
-              id="confirm-password"
-              type="password"
-              value={confirmPassword}
-              placeholder="Confirm Password"
+              onChange={({ target }) => setSurname(target.value)}
+              id="surname"
+              value={surname}
+              placeholder="Surname"
             />
           </div>
         </div>
-        <button id="signup-button" type="submit">Sign up</button>
-        <div id="error">
+
+        <div>
+          <label htmlFor="email">Email Address</label>
+          <input
+            required
+            type="email"
+            onChange={({ target }) => setEmail(target.value)}
+            id="email"
+            value={email}
+            placeholder="Email"
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            required
+            minLength={8}
+            onChange={({ target }) => setPassword(target.value)}
+            id="password"
+            type="password"
+            value={password}
+            placeholder="Password"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="confirm-password">Confirm Password</label>
+          <input
+            required
+            minLength={8}
+            onChange={({ target }) => setConfirmPassword(target.value)}
+            id="confirm-password"
+            type="password"
+            value={confirmPassword}
+            placeholder="Confirm Password"
+          />
+        </div>
+
+        <Button type="submit">Sign up</Button>
+        <div className="error">
           {error}
         </div>
       </form>
-
     </div>
   );
 };

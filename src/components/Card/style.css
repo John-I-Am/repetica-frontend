@@ -1,71 +1,56 @@
-#card {
+.card {
   height: 400px;
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
   background: white;
   border-radius: 20px;
-  margin-bottom: 20%;
-  padding: 20px;
+  padding: 40px;
 }
 
-#card-header {
+.card__header {
   display: flex;
   height: 10%;
   justify-content: space-between;
 }
 
-#card-definition {
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-}
-
-#front {
+.card__front {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 50px;
   height: 50%;
-  width: 100%;
   border-bottom: 1px black solid;
 }
 
-#front input{
+.card__front input{
+  width: 100%;
   border: none;
-  border-bottom: 1px #c87aff solid;
   justify-content: center;
-  color: purple;
   text-align: center;
-  font-size: 50px;
-  background:  #f0f0f5
+  font-size: 40px;
+  background:  #f0f0f5;
 }
 
-#front input:focus {
+.card__front input:focus {
   outline: none;
 }
 
-#back {
+.card__back {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50%;
+  gap: 50px;
 }
 
-#card-definition {
+.card__definition {
   display: flex;
+  flex-direction: column;
   font-size: 14px;
-  width: 100%;
-  align-items: flex-start;
-  height: 100%;
-  padding: 20px;
-  margin-top: 5%;
+  align-items: center;
 }
 
-#example {
-  font-style: italic;
-  display: none;
-}
-
-#partOfSpeech {
+.card__definition div {
   color: darkorange;
 }

@@ -1,39 +1,38 @@
-#login-container {
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 500px;
   width: 450px;
-  margin: 10% 0px 0px 0px;
+  padding: 20px 50px 20px 50px;
   border-radius: 30px;
   background: white;
   box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
-#login-container #header {
+.login-container__header {
   text-align: center;
 }
 
-#login-container #header p {
+.login-container__header p {
   font-size: 12px;
   line-height: 8px;
 }
 
-#login-container form {
+.login-container form {
   display: flex;
-  gap: 12px;
-  height: 80%;
-  width: 80%;
+  height: 100%;
+  gap: 20px;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
-#login-container label {
+.login-container label {
   font-size: 12px;
-  padding: 20px;
+  padding-left: 20px;
 }
 
-.login-input {
+.login-container form input {
   height: 40px;
   width: 100%;
   border-radius: 10px;
@@ -43,21 +42,7 @@
   padding-left: 20px;
 }
 
-.login-input::placeholder {
+.login-container form input::placeholder {
   font-style: italic;
-}
-
-#login-container #innerForm {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#login-button {
-  height: 40px;
-  width: 100%;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background: orange;
+  font-size: 12px;
 }

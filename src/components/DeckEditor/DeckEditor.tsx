@@ -30,7 +30,7 @@ const DeckEditor = () => {
 
   return (
     <div className="deck-editor">
-      <div id="error">
+      <div className="error">
         {error}
       </div>
       <h1>Add cards here</h1>

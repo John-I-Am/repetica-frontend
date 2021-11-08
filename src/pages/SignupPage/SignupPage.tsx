@@ -2,7 +2,7 @@ import './style.css';
 import SignupForm from '../../components/SignupForm/SignupForm';
 
 const SignupPage = () => (
-  <div id="signupPage">
+  <div className="signup-page">
     <SignupForm />
   </div>
 

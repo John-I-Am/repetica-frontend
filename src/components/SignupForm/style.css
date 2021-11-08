@@ -1,37 +1,56 @@
-#signup-container {
+.signup-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 500px;
   width: 450px;
-  margin-top: 10%;
+  padding: 20px 50px 20px 50px;
   border-radius: 30px;
   background: white;
   box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
-#signup-container #header {
+.signup-container__header {
   height: 20%;
   text-align: center;
 }
 
-#signup-container #header p {
+.signup-container__header p {
   font-size: 12px;
   line-height: 8px;
 }
 
-#signup-container form {
+.signup-container form {
   display: flex;
-  gap: 12px;
-  height: 80%;
-  width: 80%;
+  height: 100%;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
-#signup-container label {
+.signup-container input {
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background: WhiteSmoke;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+
+.signup-container input::placeholder {
+  font-style: italic;
   font-size: 12px;
-  padding: 20px;
+}
+
+.signup-container label {
+  font-size: 12px;
+  padding-left: 20px;
+}
+
+.name-input {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 #name {
@@ -44,26 +63,6 @@
   border-bottom-left-radius: 0px;
 }
 
-#name-input {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-}
-
-.signup-input {
-  height: 40px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
-  background: WhiteSmoke;
-  box-sizing: border-box;
-  padding-left: 20px;
-}
-
-.signup-input::placeholder {
-  font-style: italic;
-}
-
 /* input:invalid {
   border: 1px solid red;
 } */
@@ -71,24 +70,3 @@
 /* input:valid {
   border: 1px solid green;
 } */
-
-#innerForm {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#signup-button {
-  height: 40px;
-  width: 100%;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background: orange;
-}
-
-#error {
-  color: red;
-  font-size: 12px;
-  text-align: center;
-}

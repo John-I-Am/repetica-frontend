@@ -2,7 +2,7 @@ import './style.css';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 const LoginPage = () => (
-  <div id="loginPage">
+  <div className="login-page">
     <LoginForm />
   </div>
 

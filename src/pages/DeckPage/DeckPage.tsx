@@ -1,7 +1,7 @@
 import './style.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import NavBar from '../../components/NavBar/NavBar';
+import SideBar from '../../components/SideBar/SideBar';
 import CardList from '../../components/CardList.tsx/CardList';
 import { setFromLocal } from '../../reducers/userReducer';
 import DeckEditor from '../../components/DeckEditor/DeckEditor';
@@ -18,9 +18,9 @@ const DeckPage = () => {
   }, []);
 
   return (
-    <div id="deckPage">
+    <div className="deck-page">
       <DeckEditor />
-      <NavBar />
+      <SideBar />
       <CardList />
     </div>
 

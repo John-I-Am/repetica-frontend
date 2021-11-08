@@ -1,13 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './style.css';
+import Button from 'react-bootstrap/Button';
+
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../reducers/userReducer';
 import { initializeCards } from '../../reducers/cardReducer';
-// import { setError } from '../../reducers/errorReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div id="login-container">
-      <div id="header">
-        <h1>Login</h1>
+    <div className="login-container">
+      <div className="login-container__header">
+        <h1>Log In</h1>
         <p>
           Not a member? Signup
           {' '}
@@ -49,34 +50,29 @@ const LoginForm = () => {
       </div>
 
       <form onSubmit={handleLogin}>
-        <div id="innerForm">
-
-          <div>
-            <label htmlFor="email">Email Address</label>
-            <input
-              className="login-input"
-              type="email"
-              onChange={({ target }) => setEmail(target.value)}
-              id="email"
-              value={email}
-              placeholder="Email"
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              className="login-input"
-              onChange={({ target }) => setPassword(target.value)}
-              id="password"
-              type="password"
-              value={password}
-              placeholder="Password"
-            />
-          </div>
-
+        <div>
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            onChange={({ target }) => setEmail(target.value)}
+            id="email"
+            value={email}
+            placeholder="Email"
+          />
         </div>
-        <button id="login-button" type="submit">Login</button>
-        <div id="error">
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            onChange={({ target }) => setPassword(target.value)}
+            id="password"
+            type="password"
+            value={password}
+            placeholder="Password"
+          />
+        </div>
+
+        <Button id="login-button" type="submit">Login</Button>
+        <div className="error">
           {error}
         </div>
       </form>

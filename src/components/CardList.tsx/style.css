@@ -1,4 +1,4 @@
-#card-table {
+.card-table {
   display: block;
   overflow: auto;
   height: 600px;
@@ -7,36 +7,24 @@
   border-radius: 10px;
   border-collapse: collapse;
   text-align: center;
-}
-
-#card-table tr {
-  border-bottom: 0.5px grey solid;
-}
-
-#card-table td {
-  padding: 10px;
-}
-
-#card-table .date {
   font-size: 12px;
-  color: grey;
 }
 
-#card-table #header {
-  background: lightgrey;
+.card-table th {
+  background: white;
+  padding: 0px 85px 0px 85px;
+  width: 100%;
+  color: #c87aff;
+  font-size: 16px;
   position: sticky; 
   top: 0;
 }
 
-#header th {
- padding: 0px 85px 0px 85px;
- width: 100%;
+.card-table td {
+  padding: 10px;
 }
 
-#word {
-  font-size: 14px;
-}
-
-#definition {
-  font-size: 14px;
+.card-table__front {
+  color: orange;
+  background: #303030;
 }

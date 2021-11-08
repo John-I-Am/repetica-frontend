@@ -1,10 +1,10 @@
 import './style.css';
-import NavBar from '../../components/NavBar/NavBar';
+import SideBar from '../../components/SideBar/SideBar';
 
 const TrendsPage = () => {
   console.log('pagerended');
   return (
-    <NavBar />
+    <SideBar />
   );
 };
 

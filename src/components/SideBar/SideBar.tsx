@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -9,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearCard } from '../../reducers/cardReducer';
 import { clearUser } from '../../reducers/userReducer';
 
-const NavBar = () => {
+const SideBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -77,9 +76,9 @@ const NavBar = () => {
   };
 
   return (
-    <div id="navBar">
+    <div className="side-bar">
       <div id="toast" />
-      <div id="navMain">
+      <div className="side-bar__nav">
 
         <NavLink activeClassName="active" to="/dashboard">
           <div id="dashboard-nav" onMouseEnter={() => handleMouseEnter('dashboard-nav')} onMouseLeave={() => handleMouseLeave('dashboard-nav')}>
@@ -121,9 +120,9 @@ const NavBar = () => {
         </NavLink>
       </div>
 
-      <div>
-        <p onMouseEnter={() => handleMouseEnter('cards-due')} id="cards-due">{cardsToStudy.length}</p>
-        <p onMouseEnter={() => handleMouseEnter('total-cards')} id="total-cards">{cards.length}</p>
+      <div className="side-bar__card">
+        <p onMouseEnter={() => handleMouseEnter('cards-due')} className="cards-due">{cardsToStudy.length}</p>
+        <p onMouseEnter={() => handleMouseEnter('total-cards')} className="total-cards">{cards.length}</p>
       </div>
 
       <div onClick={handleLogout} id="logout" onMouseEnter={() => handleMouseEnter('logout')} onMouseLeave={() => handleMouseLeave('logout')}>
@@ -137,4 +136,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default SideBar;

@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+
 import './index.css';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import LoginPage from './pages/LoginPage/LoginPage';
