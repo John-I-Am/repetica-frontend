@@ -28,3 +28,9 @@
   color: orange;
   background: #303030;
 }
+
+@media only screen and (max-width: 600px) {
+  .dashboard-page {
+    padding: 10px;
+  }
+}

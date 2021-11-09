@@ -2,7 +2,7 @@ import './style.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import SideBar from '../../components/SideBar/SideBar';
-import CardList from '../../components/CardList.tsx/CardList';
+import CardList from '../../components/CardList/CardList';
 import { setFromLocal } from '../../reducers/userReducer';
 import DeckEditor from '../../components/DeckEditor/DeckEditor';
 

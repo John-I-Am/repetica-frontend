@@ -3,9 +3,10 @@
 import './style.css';
 import Button from 'react-bootstrap/Button';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateCard } from '../../reducers/cardReducer';
+import CardNote from '../CardNote/CardNote';
 
 interface CardProps {
   cardsToStudy: Array<any>;
@@ -16,6 +17,11 @@ const Card = ({ cardsToStudy }: CardProps) => {
   const [guess, setGuess] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const CardNoteRef: any = useRef();
+
+  const back = JSON.parse(cardsToStudy[0].back);
+  const definitions = back.meanings;
+  const examples = definitions[0].definitions.map((ele: any) => ele.example);
 
   const handleStyling = (result: boolean) => {
     const word: any = document.getElementById('guess-input');
@@ -78,6 +84,8 @@ const Card = ({ cardsToStudy }: CardProps) => {
       setRevealed(false);
       handleStyling(true);
     }
+
+    CardNoteRef.current.toggleVisibility();
   };
 
   const play = () => {
@@ -86,7 +94,7 @@ const Card = ({ cardsToStudy }: CardProps) => {
   };
 
   const renderAudio = () => {
-    const phonetics = JSON.parse(cardsToStudy[0].back).phonetics[0];
+    const phonetics = back.phonetics[0];
     if (phonetics !== undefined && 'audio' in phonetics) {
       return (
         <div>
@@ -97,36 +105,38 @@ const Card = ({ cardsToStudy }: CardProps) => {
         </div>
       );
     }
-
     return null;
   };
 
   return (
-    <div className="card">
-      <div className="card__header">
-        <b>{`Level ${cardsToStudy[0].level}`}</b>
-        {renderAudio()}
-      </div>
-      <div className="card__front">
-        <form onSubmit={handleGuess}>
-          <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
-        </form>
-      </div>
-      <div className="card__back">
-        {(JSON.parse(cardsToStudy[0].back).meanings).map((ele: any) => (
-          <div key={`${cardsToStudy[0].id} ${ele.partOfSpeech}`} className="card__definition">
-            <div>
-              {ele.partOfSpeech}
+    <div className="card_container">
+      <div className="card">
+        <div className="card__header">
+          <b>{`Level ${cardsToStudy[0].level}`}</b>
+          {renderAudio()}
+        </div>
+        <div className="card__front">
+          <form onSubmit={handleGuess}>
+            <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
+          </form>
+        </div>
+        <div className="card__back">
+          {definitions.map((ele: any) => (
+            <div key={`${cardsToStudy[0].id} ${ele.partOfSpeech}`} className="card__definition">
+              <div>
+                {ele.partOfSpeech}
+              </div>
+              <p>
+                {ele.definitions[0].definition}
+              </p>
             </div>
-            <p>
-              {' '}
-              {ele.definitions[0].definition}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
+        <Button variant="outline-primary" type="button" onClick={handleGuess}>Next </Button>
       </div>
-      <Button variant="outline-primary" type="button" onClick={handleGuess}>Next </Button>
+      <CardNote examples={examples} ref={CardNoteRef} />
     </div>
+
   );
 };
 
