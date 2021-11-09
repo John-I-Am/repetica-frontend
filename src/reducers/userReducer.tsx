@@ -49,7 +49,7 @@ export const registerUser = (newUser: any) => async (dispatch: any) => {
     await userService.register(newUser);
     dispatch(setUser(newUser));
   } catch (e: any) {
-    if ((e.response.data.error).includes('duplicate key error')) {
+    if ((e.response.data.error).includes('email not unique')) {
       dispatch(setError('Email Taken'));
       setTimeout(() => dispatch(setError('')), 4000);
     }
