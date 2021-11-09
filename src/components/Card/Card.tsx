@@ -15,6 +15,7 @@ const Card = ({ cardsToStudy }: CardProps) => {
   const dispatch = useDispatch();
   const [guess, setGuess] = useState('');
   const [revealed, setRevealed] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   const handleStyling = (result: boolean) => {
     const word: any = document.getElementById('guess-input');
@@ -41,8 +42,7 @@ const Card = ({ cardsToStudy }: CardProps) => {
     } else {
       updatedCard = { ...cardsToStudy[0], level: cardsToStudy[0].level - 1 };
     }
-    handleStyling(false);
-    return updatedCard;
+    dispatch(updateCard(updatedCard));
   };
 
   const handleCorrect = async () => {
@@ -52,27 +52,31 @@ const Card = ({ cardsToStudy }: CardProps) => {
     } else {
       updatedCard = { ...cardsToStudy[0], level: cardsToStudy[0].level + 1 };
     }
-    handleStyling(true);
-    return updatedCard;
+    dispatch(updateCard(updatedCard));
   };
 
   const handleGuess = async (event: any) => {
     event.preventDefault();
     const answer = (cardsToStudy[0].front).toLowerCase();
-    let result: any = '';
 
-    if (answer === guess.toLowerCase()) {
-      result = await handleCorrect();
-    } else {
-      result = await handleIncorrect();
+    if (answer === guess.toLowerCase() && !revealed) {
+      setIsCorrect(true);
+      handleStyling(true);
+      setRevealed(true);
+    } else if (answer !== guess.toLowerCase() && !revealed) {
+      setIsCorrect(false);
+      handleStyling(false);
+      setRevealed(true);
     }
 
-    if (revealed) {
-      dispatch(updateCard(result));
+    if (revealed && isCorrect) {
+      handleCorrect();
       setRevealed(false);
       handleStyling(true);
-    } else {
-      setRevealed(true);
+    } else if (revealed && !isCorrect) {
+      handleIncorrect();
+      setRevealed(false);
+      handleStyling(true);
     }
   };
 
