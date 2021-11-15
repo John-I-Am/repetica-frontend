@@ -1,20 +1,15 @@
 import './style.css';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import SideBar from '../../components/SideBar/SideBar';
 import CardList from '../../components/CardList/CardList';
-import { setFromLocal } from '../../reducers/userReducer';
 import DeckEditor from '../../components/DeckEditor/DeckEditor';
+import useInitializer from '../../hooks/useInitializer';
 
 const DeckPage = () => {
-  const dispatch = useDispatch();
+  const initializer = useInitializer();
 
   useEffect(() => {
-    const currentUser = window.localStorage.getItem('currentUser');
-    if (currentUser) {
-      const user = JSON.parse(currentUser);
-      dispatch(setFromLocal(user));
-    }
+    initializer.initialize();
   }, []);
 
   return (
