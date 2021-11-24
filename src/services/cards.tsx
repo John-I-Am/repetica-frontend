@@ -31,6 +31,14 @@ const update = async (updatedCard: any) => {
   return response.data;
 };
 
+const remove = async (id: any) => {
+  const config: any = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.delete(`/api/cards/${id}`, config);
+  return response.data;
+};
+
 export default {
-  setToken, getAll, create, update,
+  setToken, getAll, create, update, remove,
 };

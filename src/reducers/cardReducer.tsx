@@ -11,6 +11,8 @@ const cardReducer = (state = [], action: any) => {
         card.id === action.data.id ? action.data : card));
       return newState;
     }
+    case 'REMOVE_CARD':
+      return state.filter((card: any) => card.id !== action.data);
     case 'CLEAR_CARD':
       return [];
     default:
@@ -36,6 +38,18 @@ export const createCard = (card: any) => async (dispatch: any) => {
     dispatch({
       type: 'CREATE_CARD',
       data: newCard,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const removeCard = (id: any) => async (dispatch: any) => {
+  try {
+    await cardsService.remove(id);
+    dispatch({
+      type: 'REMOVE_CARD',
+      data: id,
     });
   } catch (e) {
     console.log(e);

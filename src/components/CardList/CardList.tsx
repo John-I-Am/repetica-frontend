@@ -1,7 +1,10 @@
 import './style.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+import { removeCard } from '../../reducers/cardReducer';
 
 const CardList = () => {
+  const dispatch = useDispatch();
   const cards = useSelector((state: any) => state.card);
 
   const checkDate = (date: any) => {
@@ -37,6 +40,7 @@ const CardList = () => {
                 {'Created: '}
                 {new Date(card.creationDate).toLocaleString('en-NZ')}
               </div>
+              <Button type="button" onClick={() => dispatch(removeCard(card.id))}>Remove</Button>
             </td>
             <td>
               {JSON.parse(card.back).meanings[0].definitions[0].definition}
