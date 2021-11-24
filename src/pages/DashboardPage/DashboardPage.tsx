@@ -1,10 +1,11 @@
 import './style.css';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../components/Card/Card';
 import SideBar from '../../components/SideBar/SideBar';
 import cardless from '../../assets/cardless.svg';
-import useInitializer from '../../hooks/useInitializer';
+import { setFromLocal } from '../../reducers/userReducer';
+import { initializeCards } from '../../reducers/cardReducer';
 
 interface CardlessProps {
   totalCards: number;
@@ -27,14 +28,16 @@ const Cardless = ({ totalCards, activeCards }: CardlessProps) => (
 );
 
 const DashboardPage = () => {
-  const initializer = useInitializer();
   const cards = useSelector((state: any) => state.card);
 
   const cardsToStudy = cards.filter((card: any) => (
     new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    initializer.initialize();
+    dispatch(setFromLocal());
+    dispatch(initializeCards());
   }, []);
 
   return (
