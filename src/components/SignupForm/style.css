@@ -25,6 +25,11 @@
   height: 100%;
   flex-direction: column;
   justify-content: space-around;
+  text-align: center;
+}
+
+.signup-container form p {
+  display: inline;
 }
 
 .signup-container input {
@@ -45,6 +50,8 @@
 .signup-container label {
   font-size: 12px;
   padding-left: 20px;
+  width: 100%;
+  text-align: left;
 }
 
 .name-input {

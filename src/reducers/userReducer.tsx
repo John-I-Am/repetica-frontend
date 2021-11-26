@@ -1,6 +1,6 @@
+/* eslint-disable consistent-return */
 import userService from '../services/users';
 import cardService from '../services/cards';
-import { setError } from './errorReducer';
 
 const userReducer = (state = null, action: any) => {
   switch (action.type) {
@@ -22,16 +22,13 @@ export const setUser = (user: any) => async (dispatch: any) => {
     window.localStorage.setItem(
       'currentUser', JSON.stringify(currentUser),
     );
-    dispatch({
+    await dispatch({
       type: 'SET_USER',
       data: currentUser,
     });
   } catch (e: any) {
-    if ((e.response.data.error).includes('invalid email or pssword')) {
-      dispatch(setError('Incorrect Credentials'));
-      setTimeout(() => dispatch(setError('')), 4000);
-    }
     console.log(e);
+    return e.response.data.error;
   }
 };
 
@@ -60,19 +57,17 @@ export const updateUser = (newUser: any) => async (dispatch: any) => {
     });
   } catch (e: any) {
     console.log(e);
+    return (e.response.data.error);
   }
 };
 
 export const registerUser = (newUser: any) => async (dispatch: any) => {
   try {
     await userService.register(newUser);
-    dispatch(setUser(newUser));
+    await dispatch(setUser(newUser));
   } catch (e: any) {
-    if ((e.response.data.error).includes('email not unique')) {
-      dispatch(setError('Email Taken'));
-      setTimeout(() => dispatch(setError('')), 4000);
-    }
     console.log(e);
+    return (e.response.data.error);
   }
 };
 

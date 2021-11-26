@@ -32,6 +32,7 @@
   height: 100%;
   border-bottom: 1px solid grey;
   padding-bottom: 5%;
+  padding-top: 5%;
   font-size: 14px;
 }
 
@@ -40,10 +41,17 @@
 }
 
 .profile-page__main div div {
+  color: rgba(8,115,184,1);;
   width: 30%;
   display: flex;
-  justify-content: flex-start;
+  padding: 0;
   flex-flow: column;
+}
+
+.profile-page__main form label {
+  font-size: 12px;
+  padding-left: 20px;
+  width: 70%;
 }
 
 .profile-page__main form {
@@ -57,10 +65,15 @@
 .profile-page__main form input {
   height: 40px;
   width: 70%;
+  border: 1px solid grey;
+  border-radius: 10px;
   box-sizing: border-box;
   padding-left: 20px;
-  font-size: 16px;
 }
+
+/* .profile-page__main div:first-of-type form input {
+  display: hidden;
+} */
 
 .profile-page__main div:last-of-type form input {
   height: 20px;

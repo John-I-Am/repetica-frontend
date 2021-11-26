@@ -1,40 +1,37 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './style.css';
 import Button from 'react-bootstrap/Button';
 
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../reducers/userReducer';
-import { initializeCards } from '../../reducers/cardReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const error = useSelector((state: any) => state.error);
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const delayedLogin = () => {
-    if (window.localStorage.getItem('currentUser')) {
-      setTimeout(() => history.push('/dashboard'), 400);
-      setTimeout(() => dispatch(initializeCards()), 200);
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    setError: setErrorLogin,
+    formState: { errors: errorsLogin },
+  } = useForm();
+
+  const handleLogin = async (data: any) => {
+    const response: any = await dispatch(setUser(data));
+    if (response === 'invalid email or password') {
+      setErrorLogin('password', {
+        type: 'manual',
+        message: 'Incorrect Login',
+      });
     }
-  };
-
-  const handleLogin = (event: any) => {
-    event.preventDefault();
-    dispatch(setUser({
-      email,
-      password,
-    }));
-
-    setTimeout(delayedLogin, 500);
-
-    setEmail('');
-    setPassword('');
+    if (window.localStorage.getItem('currentUser')) {
+      history.push('/dashboard');
+    }
   };
 
   return (
@@ -49,32 +46,33 @@ const LoginForm = () => {
         <p>Forgotten password? Recover details here</p>
       </div>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmitLogin(handleLogin)}>
         <div>
           <label htmlFor="email">Email Address</label>
           <input
-            type="email"
-            onChange={({ target }) => setEmail(target.value)}
-            id="email"
-            value={email}
-            placeholder="Email"
+            placeholder="email"
+            {...registerLogin('email', {
+              required: 'required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'invalid email address',
+              },
+            })}
           />
+          <p className="error">{errorsLogin.email && errorsLogin.email.message}</p>
         </div>
         <div>
           <label htmlFor="password">Password</label>
           <input
-            onChange={({ target }) => setPassword(target.value)}
-            id="password"
             type="password"
-            value={password}
             placeholder="Password"
+            {...registerLogin('password', {
+              required: 'required',
+            })}
           />
+          <p className="error">{errorsLogin.password && errorsLogin.password.message}</p>
         </div>
-
         <Button id="login-button" type="submit">Login</Button>
-        <div className="error">
-          {error}
-        </div>
       </form>
     </div>
   );
