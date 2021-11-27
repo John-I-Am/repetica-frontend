@@ -1,11 +1,11 @@
 import './style.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { removeCard } from '../../reducers/cardReducer';
+import { removeCard } from '../../reducers/activeDeckReducer';
 
 const CardList = () => {
   const dispatch = useDispatch();
-  const cards = useSelector((state: any) => state.card);
+  const cards = useSelector((state: any) => state.activeDeck.cards);
 
   const checkDate = (date: any) => {
     if (new Date(date).getTime() <= (new Date()).getTime()) {
@@ -30,7 +30,8 @@ const CardList = () => {
       </thead>
 
       <tbody>
-        {cards.map((card: any) => (
+        {/* temporary fix for bug where non empty cards array contains only id string */}
+        {cards === undefined || (typeof cards[0]) === 'string' ? <tr /> : cards.map((card: any) => (
           <tr key={card.id}>
             <td className="card-table__front">
               <div>

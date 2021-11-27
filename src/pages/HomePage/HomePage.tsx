@@ -2,6 +2,7 @@
 import './style.css';
 import { Nav, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,12 +14,18 @@ import post from '../../assets/post.svg';
 import mobile from '../../assets/mobile.svg';
 import Card from '../../components/Card/Card';
 import Footer from '../../components/Footer/Footer';
+import { setActive } from '../../reducers/activeDeckReducer';
 
 const HomePage = () => {
   const history = useHistory();
 
   const test = '{"word":"test","phonetic":"tɛst","phonetics":[{"text":"tɛst","audio":"//ssl.gstatic.com/dictionary/static/sounds/20200429/test--_gb_1.mp3"}],"origin":"late Middle English (denoting a cupel used to treat gold or silver alloys or ore): via Old French from Latin testu, testum ‘earthen pot’, variant of testa ‘jug, shell’. Compare with test2. The verb dates from the early 17th century.","meanings":[{"partOfSpeech":"noun","definitions":[{"definition":"a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.","example":"both countries carried out nuclear tests in May","synonyms":["trial","experiment","pilot study","try-out","check","examination","assessment","evaluation","appraisal","investigation","inspection","analysis","scrutiny","scrutinization","study","probe","exploration","screening","audition","screen test","assay"],"antonyms":[]},{"definition":"short for Test match.","example":"the first Test against New Zealand","synonyms":[],"antonyms":[]},{"definition":"a movable hearth in a reverberating furnace, used for separating gold or silver from lead.","synonyms":[],"antonyms":[]}]},{"partOfSpeech":"verb","definitions":[{"definition":"take measures to check the quality, performance, or reliability of (something), especially before putting it into widespread use or practice.","example":"this range has not been tested on animals","synonyms":["try out","trial","carry out trials on","put to the test","put through its paces","experiment with","pilot","check","examine","assess","evaluate","appraise","investigate","analyse","scrutinize","study","probe","explore","sample","screen","assay"],"antonyms":[]}]}]}';
-  const cardsToStudy = [{ front: 'test', back: test, level: 4 }];
+
+  const cardsToStudy = [{
+    front: 'test', back: test, level: 4, checkpointDate: new Date(),
+  }];
+  const dispatch = useDispatch();
+  dispatch(setActive({ cards: cardsToStudy }));
 
   return (
     <div className="home-page">
@@ -56,7 +63,7 @@ const HomePage = () => {
       </div>
 
       <div className="home-page__section-two">
-        <Card cardsToStudy={cardsToStudy} />
+        <Card />
       </div>
 
       <div className="home-page__section-three">

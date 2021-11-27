@@ -5,21 +5,23 @@ import './style.css';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCard } from '../../reducers/cardReducer';
 import { clearUser } from '../../reducers/userReducer';
+import { clearDeck } from '../../reducers/deckReducer';
+import { clearActiveDeck } from '../../reducers/activeDeckReducer';
 
 const SideBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const cards = useSelector((state: any) => state.card);
-  const cardsToStudy = cards.filter((card: any) => (
+  const cards = useSelector((state: any) => state.activeDeck.cards);
+  const cardsToStudy = cards === undefined ? [] : cards.filter((card: any) => (
     new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     window.localStorage.removeItem('currentUser');
-    dispatch(clearCard());
+    dispatch(clearActiveDeck());
     dispatch(clearUser());
+    dispatch(clearDeck());
     history.push('/');
   };
 
@@ -122,7 +124,7 @@ const SideBar = () => {
 
       <div className="side-bar__card">
         <p onMouseEnter={() => handleMouseEnter('cards-due')} className="cards-due">{cardsToStudy.length}</p>
-        <p onMouseEnter={() => handleMouseEnter('total-cards')} className="total-cards">{cards.length}</p>
+        <p onMouseEnter={() => handleMouseEnter('total-cards')} className="total-cards">{cards === undefined ? 0 : cards.length}</p>
       </div>
 
       <div onClick={handleLogout} id="logout" onMouseEnter={() => handleMouseEnter('logout')} onMouseLeave={() => handleMouseLeave('logout')}>

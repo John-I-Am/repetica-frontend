@@ -4,20 +4,20 @@ import './style.css';
 import Button from 'react-bootstrap/Button';
 
 import { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateCard } from '../../reducers/cardReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCard } from '../../reducers/activeDeckReducer';
 import CardNote from '../CardNote/CardNote';
 
-interface CardProps {
-  cardsToStudy: Array<any>;
-}
-
-const Card = ({ cardsToStudy }: CardProps) => {
+const Card = () => {
   const dispatch = useDispatch();
   const [guess, setGuess] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const CardNoteRef: any = useRef();
+
+  const cards = useSelector((state: any) => state.activeDeck.cards);
+  const cardsToStudy = cards.filter((card: any) => (
+    new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
   const back = JSON.parse(cardsToStudy[0].back);
   const definitions = back.meanings;

@@ -2,13 +2,15 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import cardReducer from './reducers/cardReducer';
+import activeDeckReducer from './reducers/activeDeckReducer';
+import deckReducer from './reducers/deckReducer';
 import notificationReducer from './reducers/notificationReducer';
 import userReducer from './reducers/userReducer';
 
 const reducers = combineReducers({
   user: userReducer,
-  card: cardReducer,
+  decks: deckReducer,
+  activeDeck: activeDeckReducer,
   notification: notificationReducer,
 });
 

@@ -6,13 +6,13 @@ import CardList from '../../components/CardList/CardList';
 import DeckEditor from '../../components/DeckEditor/DeckEditor';
 import DeckList from '../../components/DeckList/DeckList';
 import { setFromLocal } from '../../reducers/userReducer';
-import { initializeCards } from '../../reducers/cardReducer';
+import { initializeDecks } from '../../reducers/deckReducer';
 
 const DeckPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setFromLocal());
-    dispatch(initializeCards());
+    dispatch(initializeDecks());
   }, []);
 
   return (
