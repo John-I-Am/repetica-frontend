@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 50px;
+  height: 100%;
 
   @media ${device.mobileL} {
     padding-top: 60px;

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-boolean-value */
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../components/Card/Card';
@@ -6,26 +8,19 @@ import cardless from '../../assets/cardless.svg';
 import { setFromLocal } from '../../reducers/userReducer';
 import { initializeDecks } from '../../reducers/deckReducer';
 
-import { Container } from './styles';
+import { Container, NoCards } from './styles';
+import DeckList from '../../components/DeckList/DeckList';
 
-interface CardlessProps {
-  totalCards: number;
-  activeCards: number;
-}
-
-const Cardless = ({ totalCards, activeCards }: CardlessProps) => (
-  <div className="cardless">
+const Cardless = () => (
+  <NoCards>
     <img src={cardless} alt="empty deck" />
     <h1>All Done :)</h1>
     <div>
       <h2>
-        <b>{activeCards}</b>
-        {' Cards Due For Review Out of '}
-        <b>{totalCards}</b>
-        {' Cards Total.'}
+        No Cards Due For Review In This Deck
       </h2>
     </div>
-  </div>
+  </NoCards>
 );
 
 const DashboardPage = () => {
@@ -41,13 +36,10 @@ const DashboardPage = () => {
 
   return (
     <Container>
+      <DeckList noCreate />
       {cardsToStudy.length !== 0 ? <Card />
         : (
-          <Cardless
-            totalCards={activeCards === undefined ? 0
-              : activeCards.length}
-            activeCards={cardsToStudy.length}
-          />
+          <Cardless />
         )}
       <SideBar />
     </Container>

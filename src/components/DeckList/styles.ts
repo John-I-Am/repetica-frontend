@@ -1,12 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`  
+export const Container = styled.div<any>`  
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
   padding: 10px;
   padding-bottom: 50px;
+  width: 100%;
   overflow: scroll;
 
   form {
@@ -30,6 +31,13 @@ export const Container = styled.div`
     display: flex;
     gap: 10px;
   }
+
+  ${(props: any) => props.noCreate
+    && css`
+      button:nth-of-type(2) {
+        display: none;
+      }
+    `};
 `;
 
 export const blue = 'blue';

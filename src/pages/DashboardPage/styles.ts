@@ -1,25 +1,18 @@
 import styled from 'styled-components';
-import { device, PURPLE_PRIMARY, ORANGE_PRIMARY } from '../../constants';
+import { BLUE_PRIMARY, device, PURPLE_PRIMARY } from '../../constants';
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   background: ghostwhite;
   height: 100vh;
-  padding: 5% 100px 5% 150px;
+  padding: 0 100px 0 150px;
 
   img {
     width: 100%;
     height: auto;  
-  }
-
-   b {
-    color: ${PURPLE_PRIMARY};
-   }
-
-   b:first-child {
-    color: ${ORANGE_PRIMARY};
   }
 
   @media ${device.mobileL} {
@@ -27,8 +20,11 @@ export const Container = styled.div`
   }
 `;
 
-export const NoCards = styled.form`
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
+export const NoCards = styled.div`
+  color: ${PURPLE_PRIMARY};
+  padding-bottom: 10%;
+
+  h1 {
+    color: ${BLUE_PRIMARY}
+  }
 `;

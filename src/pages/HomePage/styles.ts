@@ -1,13 +1,5 @@
-/* eslint-disable no-unused-vars */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { device, BLUE_PRIMARY, ORANGE_PRIMARY } from '../../constants';
-
-// example of styled component props
-//   ${(props: any) => props.primary
-//     && css`
-//       background: palevioletred;
-//       color: white;
-//     `};
 
 export const NavBar = styled.div<any>`
   position: sticky;

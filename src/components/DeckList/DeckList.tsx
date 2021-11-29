@@ -6,7 +6,7 @@ import { setActive } from '../../reducers/activeDeckReducer';
 
 import { Container } from './styles';
 
-const DeckList = () => {
+const DeckList = ({ noCreate }: any) => {
   const dispatch = useDispatch();
   const decks = useSelector((state: any) => state.decks);
 
@@ -19,7 +19,7 @@ const DeckList = () => {
   };
 
   return (
-    <Container>
+    <Container noCreate={noCreate}>
       <form>
         <input placeholder="Find Deck" />
       </form>
