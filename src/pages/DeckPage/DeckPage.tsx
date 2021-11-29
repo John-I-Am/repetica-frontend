@@ -1,6 +1,6 @@
-import './style.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Container } from './styles';
 import SideBar from '../../components/SideBar/SideBar';
 import CardList from '../../components/CardList/CardList';
 import DeckEditor from '../../components/DeckEditor/DeckEditor';
@@ -16,12 +16,12 @@ const DeckPage = () => {
   }, []);
 
   return (
-    <div className="deck-page">
+    <Container>
       <DeckList />
       <DeckEditor />
       <SideBar />
       <CardList />
-    </div>
+    </Container>
 
   );
 };

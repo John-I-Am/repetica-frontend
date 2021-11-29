@@ -1,11 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import './style.css';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@mantine/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { createDeck } from '../../reducers/deckReducer';
 import { setActive } from '../../reducers/activeDeckReducer';
+
+import { Container } from './styles';
 
 const DeckList = () => {
   const dispatch = useDispatch();
@@ -20,22 +19,20 @@ const DeckList = () => {
   };
 
   return (
-    <div className="decklist">
-      <h1>Decks</h1>
+    <Container>
       <form>
         <input placeholder="Find Deck" />
       </form>
-      <div className="decklist__list-container">
-        <Button type="button" onClick={handleShowAll}> All Cards</Button>
-        <Button type="button" onClick={() => dispatch(createDeck())}> New Deck</Button>
+      <div>
+        <Button onClick={handleShowAll}> All Cards</Button>
+        <Button onClick={() => dispatch(createDeck())}> New Deck</Button>
         {decks.map((deck: any) => (
-          <div key={deck._id} onClick={() => dispatch(setActive(deck))}>
+          <Button variant="outline" key={deck._id} onClick={() => dispatch(setActive(deck))}>
             <p>{deck.title}</p>
-          </div>
+          </Button>
         ))}
       </div>
-
-    </div>
+    </Container>
   );
 };
 

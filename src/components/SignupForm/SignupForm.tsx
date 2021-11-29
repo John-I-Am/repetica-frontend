@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import './style.css';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import {
+  Container, Header, Form, FormName,
+} from './styles';
 import { registerUser } from '../../reducers/userReducer';
 
 const SignupForm = () => {
@@ -36,18 +38,18 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-container__header">
+    <Container>
+      <Header>
         <h1>Create Account</h1>
         <p>
           Already registered? Log in
           {' '}
           <Link to="/login">here </Link>
         </p>
-      </div>
+      </Header>
 
-      <form onSubmit={handleSubmit(handleSignup)}>
-        <div className="name-input">
+      <Form onSubmit={handleSubmit(handleSignup)}>
+        <FormName>
           <div>
             <label htmlFor="name">First Name</label>
             <input
@@ -77,7 +79,7 @@ const SignupForm = () => {
             />
             <p className="error">{errors.surname && errors.surname.message}</p>
           </div>
-        </div>
+        </FormName>
 
         <div>
           <label htmlFor="email">Email Address</label>
@@ -95,6 +97,7 @@ const SignupForm = () => {
             {errors.email && errors.email.message}
           </p>
         </div>
+
         <div>
           <label htmlFor="password">Password</label>
           <input
@@ -131,8 +134,8 @@ const SignupForm = () => {
         </div>
 
         <Button type="submit">Sign up</Button>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 };
 

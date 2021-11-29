@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import './style.css';
 import { useForm } from 'react-hook-form';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Switch } from '@mantine/core';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  Container, Header, Main, Section, Form, SectionHeader,
+} from './styles';
 import SideBar from '../../components/SideBar/SideBar';
 import { setFromLocal, updateUser } from '../../reducers/userReducer';
 import { setNotification } from '../../reducers/notificationReducer';
@@ -77,19 +78,19 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="profile-page">
+    <Container>
       <b className="notification">{notification}</b>
-      <div className="profile-page__header">
+      <Header>
         <h1>{user === null ? 'null' : user.name}</h1>
         <h1>{user === null ? 'null' : user.surname}</h1>
-      </div>
-      <div className="profile-page__main">
-        <div>
-          <div>
+      </Header>
+      <Main>
+        <Section>
+          <SectionHeader>
             <h2>Name</h2>
             <p>This is you!</p>
-          </div>
-          <form onSubmit={handleSubmitName(onSubmitName)}>
+          </SectionHeader>
+          <Form onSubmit={handleSubmitName(onSubmitName)}>
             <label htmlFor="name">Name</label>
             <input
               {...registerName('name', {
@@ -117,15 +118,15 @@ const ProfilePage = () => {
               {errorsName.surname && errorsName.surname.message}
             </p>
             <Button type="submit">Change</Button>
-          </form>
-        </div>
+          </Form>
+        </Section>
 
-        <div>
-          <div>
+        <Section>
+          <SectionHeader>
             <h2>Email</h2>
             <p>Your email is used for logging in, as well as being the default method of contact</p>
-          </div>
-          <form onSubmit={handleSubmitEmail(onSubmitEmail)}>
+          </SectionHeader>
+          <Form onSubmit={handleSubmitEmail(onSubmitEmail)}>
             <input
               placeholder={user === null ? '' : user.email}
               {...registerEmail('email', {
@@ -140,15 +141,15 @@ const ProfilePage = () => {
               {errorsEmail.email && errorsEmail.email.message}
             </p>
             <Button type="submit">Change</Button>
-          </form>
-        </div>
+          </Form>
+        </Section>
 
-        <div>
-          <div>
+        <Section>
+          <SectionHeader>
             <h2>Password</h2>
             <p>Minimum of 8 characters. please avoid commonly used passwords</p>
-          </div>
-          <form onSubmit={handleSubmitPassword(onSubmitPassword)}>
+          </SectionHeader>
+          <Form onSubmit={handleSubmitPassword(onSubmitPassword)}>
             <label htmlFor="currentPassword">Current password</label>
             <input type="password" {...registerPassword('currentPassword', { required: 'required' })} />
             <p className="error">{errorsPassword.currentPassword && errorsPassword.currentPassword.message}</p>
@@ -180,30 +181,26 @@ const ProfilePage = () => {
             />
             <p className="error">{errorsPassword.confirmNewPassword && errorsPassword.confirmNewPassword.message}</p>
             <Button type="submit" onSubmit={handleSubmitPassword(onSubmitPassword)}>Change</Button>
-          </form>
-        </div>
+          </Form>
+        </Section>
 
-        <div>
-          <div>
+        <Section>
+          <SectionHeader>
             <h2>Default Deck Setting</h2>
             <p>Linear: incorrectly answered cards will lose one level</p>
             <p>Non-Linear: incorrectly answered cards will reset to level 0.</p>
-          </div>
-          <form onSubmit={onSubmitRadio}>
-            <Form.Check
-              disabled
-              checked
-              type="switch"
-              id="linear-switch"
+          </SectionHeader>
+          <Form onSubmit={onSubmitRadio}>
+            <Switch
               label="Linear"
             />
-          </form>
-        </div>
+          </Form>
+        </Section>
 
-      </div>
+      </Main>
       <div />
       <SideBar />
-    </div>
+    </Container>
 
   );
 };

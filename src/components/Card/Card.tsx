@@ -1,12 +1,17 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/media-has-caption */
-import './style.css';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@mantine/core';
 
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  Container, Cardd, CardHeader, CardFront, CardBack,
+} from './styles';
 import { updateCard } from '../../reducers/activeDeckReducer';
 import CardNote from '../CardNote/CardNote';
+import speaker from '../../assets/audio.svg';
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -98,9 +103,7 @@ const Card = () => {
     if (phonetics !== undefined && 'audio' in phonetics) {
       return (
         <div>
-          <svg onClick={play} width="32" height="32" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.25 12L5.75 5.75V18.25L18.25 12Z" />
-          </svg>
+          <img onClick={play} src={speaker} alt="audio" />
           <audio id="audio" src={phonetics.audio} />
         </div>
       );
@@ -109,20 +112,21 @@ const Card = () => {
   };
 
   return (
-    <div className="card_container">
-      <div className="card">
-        <div className="card__header">
+    <Container>
+      <Cardd>
+        <CardHeader>
           <b>{`Level ${cardsToStudy[0].level}`}</b>
+          <Button onClick={handleGuess}>Next </Button>
           {renderAudio()}
-        </div>
-        <div className="card__front">
+        </CardHeader>
+        <CardFront>
           <form onSubmit={handleGuess}>
             <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
           </form>
-        </div>
-        <div className="card__back">
+        </CardFront>
+        <CardBack>
           {definitions.map((ele: any) => (
-            <div key={`${cardsToStudy[0].id} ${ele.partOfSpeech}`} className="card__definition">
+            <div key={`${cardsToStudy[0].id} ${ele.partOfSpeech}`}>
               <div>
                 {ele.partOfSpeech}
               </div>
@@ -131,12 +135,10 @@ const Card = () => {
               </p>
             </div>
           ))}
-        </div>
-        <Button variant="outline-primary" type="button" onClick={handleGuess}>Next </Button>
-      </div>
+        </CardBack>
+      </Cardd>
       <CardNote examples={examples} ref={CardNoteRef} />
-    </div>
-
+    </Container>
   );
 };
 

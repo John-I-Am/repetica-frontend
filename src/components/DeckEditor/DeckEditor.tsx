@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-props-no-spreading */
-import './style.css';
-import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import { Button, Modal } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Container, Form, TitleForm } from './styles';
 import dictionaryService from '../../services/dictionary';
 import { createCard } from '../../reducers/activeDeckReducer';
 import { initializeDecks, removeDeck, updateDeck } from '../../reducers/deckReducer';
 
 const DeckEditor = () => {
+  const [opened, setOpened] = useState(false);
   const activeDeck = useSelector((state: any) => state.activeDeck);
   const dispatch = useDispatch();
 
@@ -58,22 +60,25 @@ const DeckEditor = () => {
   };
 
   return (
-    <div className="deck-editor">
-      <p>{`Active Deck: ${activeDeck.title === undefined ? 'All Cards' : activeDeck.title}`}</p>
-      <form style={display} onSubmit={handleSubmit(handleAddCard)}>
-        <label htmlFor="word">Add New word</label>
-        <input
-          placeholder="eg. Aardvark"
-          {...register('word', {
+    <Container>
+      <Modal opened={opened} onClose={() => setOpened(false)}>
+        <Form style={display} onSubmit={handleSubmit(handleAddCard)}>
+          <label htmlFor="word">Add New word</label>
+          <input
+            placeholder="eg. Aardvark"
+            {...register('word', {
 
-          })}
-        />
-        <p className="error">{errors.word && errors.word.message}</p>
-      </form>
-      <form style={display} onSubmit={handleSubmitTitle(handleChangeTitle)}>
-        <label htmlFor="title">Change Title</label>
+            })}
+          />
+          <p className="error">{errors.word && errors.word.message}</p>
+        </Form>
+      </Modal>
+
+      <Button style={display} onClick={() => setOpened(true)}>Add</Button>
+
+      <TitleForm style={display} onSubmit={handleSubmitTitle(handleChangeTitle)}>
         <input
-          placeholder="new Title"
+          defaultValue={activeDeck.title}
           {...registerTitle('title', {
             required: 'required',
             pattern: {
@@ -83,9 +88,10 @@ const DeckEditor = () => {
           })}
         />
         <p className="error">{errorsTitle.title && errorsTitle.title.message}</p>
-      </form>
-      <Button style={display} type="button" onClick={handleDeleteDeck}>delete deck</Button>
-    </div>
+      </TitleForm>
+      <Button style={display} onClick={handleDeleteDeck}>delete</Button>
+
+    </Container>
 
   );
 };

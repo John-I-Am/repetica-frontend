@@ -1,8 +1,7 @@
 /* eslint-disable no-use-before-define */
-import './style.css';
 import React, { useState, useImperativeHandle } from 'react';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
+import { Tabs } from '@mantine/core';
+import { Container } from './styles';
 
 interface CardNoteProps {
   examples: Array<any>;
@@ -22,16 +21,16 @@ const CardNote = React.forwardRef(({ examples }: CardNoteProps, ref) => {
   }));
 
   return (
-    <div className="card-note" style={hideWhenVisible}>
-      <Tabs defaultActiveKey="examples" id="uncontrolled-tab-example" className="mt-5">
-        <Tab className="mt-2 p-3" eventKey="examples" title="Examples">
+    <Container style={hideWhenVisible}>
+      <Tabs>
+        <Tabs.Tab label="Examples">
           {examples.map((ele: any) => <p key={`${ele}`}>{ele}</p>)}
-        </Tab>
-        <Tab className="mt-2 p-3" eventKey="note" title="Note">
+        </Tabs.Tab>
+        <Tabs.Tab label="Notes">
           <p>No Notes to be found</p>
-        </Tab>
+        </Tabs.Tab>
       </Tabs>
-    </div>
+    </Container>
   );
 });
 

@@ -1,4 +1,3 @@
-import './style.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../components/Card/Card';
@@ -6,6 +5,8 @@ import SideBar from '../../components/SideBar/SideBar';
 import cardless from '../../assets/cardless.svg';
 import { setFromLocal } from '../../reducers/userReducer';
 import { initializeDecks } from '../../reducers/deckReducer';
+
+import { Container } from './styles';
 
 interface CardlessProps {
   totalCards: number;
@@ -39,7 +40,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="dashboard-page">
+    <Container>
       {cardsToStudy.length !== 0 ? <Card />
         : (
           <Cardless
@@ -49,7 +50,7 @@ const DashboardPage = () => {
           />
         )}
       <SideBar />
-    </div>
+    </Container>
   );
 };
 

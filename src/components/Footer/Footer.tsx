@@ -1,14 +1,14 @@
-import './style.css';
+import { Container } from './styles';
 
 const Footer = () => (
-  <div className="footer">
+  <Container>
     <p>@2022 Repetica</p>
     <ul>
       <li>Contact</li>
       <li>Terms</li>
       <li>Privacy</li>
     </ul>
-  </div>
+  </Container>
 );
 
 export default Footer;

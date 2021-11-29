@@ -1,6 +1,6 @@
-import './style.css';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@mantine/core';
+import { Table } from './styles';
 import { removeCard } from '../../reducers/activeDeckReducer';
 
 const CardList = () => {
@@ -19,13 +19,13 @@ const CardList = () => {
   };
 
   return (
-    <table className="card-table">
+    <Table>
       <thead>
         <tr>
+          <th>Overview</th>
           <th>Front</th>
           <th>Back</th>
           <th>Next Review</th>
-          <th>Level</th>
         </tr>
       </thead>
 
@@ -33,15 +33,13 @@ const CardList = () => {
         {/* temporary fix for bug where non empty cards array contains only id string */}
         {cards === undefined || (typeof cards[0]) === 'string' ? <tr /> : cards.map((card: any) => (
           <tr key={card.id}>
-            <td className="card-table__front">
-              <div>
-                <h2>{ card.front }</h2>
-              </div>
-              <div className="card-table__date">
-                {'Created: '}
-                {new Date(card.creationDate).toLocaleString('en-NZ')}
-              </div>
+            <td>
+              <p>{` Current level: ${card.level}`}</p>
+              <p>{` Created: ${new Date(card.creationDate).toLocaleString('en-NZ')}`}</p>
               <Button type="button" onClick={() => dispatch(removeCard(card.id))}>Remove</Button>
+            </td>
+            <td>
+              <p>{ card.front }</p>
             </td>
             <td>
               {JSON.parse(card.back).meanings[0].definitions[0].definition}
@@ -49,14 +47,11 @@ const CardList = () => {
             <td>
               {checkDate(card.checkpointDate)}
             </td>
-            <td>
-              {card.level}
-            </td>
           </tr>
         ))}
       </tbody>
 
-    </table>
+    </Table>
   );
 };
 

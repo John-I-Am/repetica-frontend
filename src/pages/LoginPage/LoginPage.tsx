@@ -1,10 +1,10 @@
-import './style.css';
+import { Container } from './styles';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 const LoginPage = () => (
-  <div className="login-page">
+  <Container>
     <LoginForm />
-  </div>
+  </Container>
 
 );
 

@@ -1,10 +1,10 @@
-import './style.css';
+import { Container } from './styles';
 import SignupForm from '../../components/SignupForm/SignupForm';
 
 const SignupPage = () => (
-  <div className="signup-page">
+  <Container>
     <SignupForm />
-  </div>
+  </Container>
 
 );
 
