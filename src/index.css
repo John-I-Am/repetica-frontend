@@ -17,10 +17,3 @@ code {
   font-size: 12px;
   text-align: center;
 }
-
-.notification {
-  position: sticky;
-  top: 20px;
-  color: green;
-  text-align: center;
-}

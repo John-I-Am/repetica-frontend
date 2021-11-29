@@ -4,16 +4,16 @@ import { useForm } from 'react-hook-form';
 import { Button, Switch } from '@mantine/core';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNotifications } from '@mantine/notifications';
 import {
   Container, Header, Main, Section, Form, SectionHeader,
 } from './styles';
 import SideBar from '../../components/SideBar/SideBar';
 import { setFromLocal, updateUser } from '../../reducers/userReducer';
-import { setNotification } from '../../reducers/notificationReducer';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const notification = useSelector((state: any) => state.notification);
+  const notifications = useNotifications();
   const user = useSelector((state: any) => state.user);
 
   const {
@@ -39,8 +39,7 @@ const ProfilePage = () => {
 
   const onSubmitName = async (data: any) => {
     await dispatch(updateUser(data));
-    dispatch(setNotification('Name changed successfully'));
-    setTimeout(() => dispatch(setNotification('')), 3000);
+    notifications.showNotification({ title: 'Success', message: 'Name updated successfully', color: 'green' });
   };
 
   const onSubmitPassword = async (data: any) => {
@@ -50,9 +49,9 @@ const ProfilePage = () => {
         type: 'manual',
         message: 'Incorrect Password',
       });
+      notifications.showNotification({ title: 'Error', message: 'Error updating password', color: 'red' });
     } else {
-      dispatch(setNotification('Password changed successfully'));
-      setTimeout(() => dispatch(setNotification('')), 3000);
+      notifications.showNotification({ title: 'Success', message: 'Password updated successfully', color: 'green' });
     }
   };
 
@@ -63,9 +62,9 @@ const ProfilePage = () => {
         type: 'manual',
         message: 'Email unavailable',
       });
+      notifications.showNotification({ title: 'Error', message: 'Error updating email', color: 'red' });
     } else {
-      dispatch(setNotification('Email changed successfully'));
-      setTimeout(() => dispatch(setNotification('')), 3000);
+      notifications.showNotification({ title: 'Success', message: 'Email updated successfully', color: 'green' });
     }
   };
 
@@ -79,7 +78,6 @@ const ProfilePage = () => {
 
   return (
     <Container>
-      <b className="notification">{notification}</b>
       <Header>
         <h1>{user === null ? 'null' : user.name}</h1>
         <h1>{user === null ? 'null' : user.surname}</h1>
