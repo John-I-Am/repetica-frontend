@@ -121,11 +121,9 @@ const Card = () => {
         </CardFront>
         <CardBack>
           {cardsToStudy[0].back.texts.map((ele: any) => (
-            <div key={`${cardsToStudy[0].id}`}>
-              <p>
-                {ele}
-              </p>
-            </div>
+            <p key={`${cardsToStudy[0].id}`}>
+              {ele}
+            </p>
           ))}
         </CardBack>
       </Cardd>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLUE_PRIMARY, device, PURPLE_PRIMARY } from '../../constants';
+import { BLUE_PRIMARY, device } from '../../constants';
 
 export const Container = styled.div`
   display: flex;
@@ -8,23 +8,24 @@ export const Container = styled.div`
   align-items: center;
   background: ghostwhite;
   height: 100vh;
-  padding: 0 100px 0 150px;
-
-  img {
-    width: 100%;
-    height: auto;  
-  }
+  padding: 10px 10px 10px 60px;
 
   @media ${device.mobileL} {
-    padding: 70px 20px 20px 20px;
+    padding: 60px 10px 10px 10px;
   }
 `;
 
 export const NoCards = styled.div`
-  color: ${PURPLE_PRIMARY};
-  padding-bottom: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  h1 {
-    color: ${BLUE_PRIMARY}
+  h2 {
+    color: ${BLUE_PRIMARY};
+
+    @media ${device.mobileL} {
+      font-size: 16px;
+    }
   }
 `;

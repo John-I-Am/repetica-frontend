@@ -5,10 +5,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   background: ghostwhite;
-  padding: 10px 10px 10px 80px;
+  padding: 10px 10px 10px 60px;
 
   @media ${device.mobileL} {
-    padding: 10px;
+    padding: 60px 10px 10px 10px;
   }
 `;
 
@@ -36,14 +36,7 @@ export const Form = styled.form`
 `;
 
 export const Header = styled.div`
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    padding: 5%;
-
-    @media ${device.mobileL} {
-    padding-top: 60px;
-  }
+    text-align: center;
 `;
 
 export const Main = styled.div`

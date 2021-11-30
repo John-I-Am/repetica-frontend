@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mantine/core';
 import { Table } from './styles';
 import { removeCard } from '../../reducers/activeDeckReducer';
+import DeckEditor from '../DeckEditor/DeckEditor';
 
 const CardList = () => {
   const dispatch = useDispatch();
@@ -19,41 +20,44 @@ const CardList = () => {
   };
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Overview</th>
-          <th>Front</th>
-          <th>Back</th>
-          <th>Next Review</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {/* temporary fix for bug where non empty cards array contains only id string */}
-        {cards === undefined || (typeof cards[0]) === 'string' ? <tr /> : cards.map((card: any) => (
-          <tr key={card.id}>
-            <td>
-              <p>{` Current level: ${card.level}`}</p>
-              <p>{` Created: ${new Date(card.creationDate).toLocaleString('en-NZ')}`}</p>
-              <Button type="button" onClick={() => dispatch(removeCard(card.id))}>Remove</Button>
-            </td>
-            <td>
-              <p>
-                { card.front.texts.map((e: any) => <p>{e}</p>)}
-              </p>
-            </td>
-            <td>
-              { card.back.texts.map((e: any) => <p>{e}</p>)}
-            </td>
-            <td>
-              {checkDate(card.checkpointDate)}
-            </td>
+    <div>
+      <DeckEditor />
+      <Table>
+        <thead>
+          <tr>
+            <th>Overview</th>
+            <th>Front</th>
+            <th>Back</th>
+            <th>Next Review</th>
           </tr>
-        ))}
-      </tbody>
+        </thead>
 
-    </Table>
+        <tbody>
+          {/* temporary fix for bug where non empty cards array contains only id string */}
+          {cards === undefined || (typeof cards[0]) === 'string' ? <tr /> : cards.map((card: any) => (
+            <tr key={card.id}>
+              <td>
+                <p>{` Current level: ${card.level}`}</p>
+                <p>{` Created: ${new Date(card.creationDate).toLocaleString('en-NZ')}`}</p>
+                <Button type="button" onClick={() => dispatch(removeCard(card.id))}>Remove</Button>
+              </td>
+              <td>
+                <p>
+                  { card.front.texts.map((e: any) => <p>{e}</p>)}
+                </p>
+              </td>
+              <td>
+                { card.back.texts.map((e: any) => <p>{e}</p>)}
+              </td>
+              <td>
+                {checkDate(card.checkpointDate)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
+
   );
 };
 

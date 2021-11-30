@@ -14,11 +14,9 @@ import DeckList from '../../components/DeckList/DeckList';
 const Cardless = () => (
   <NoCards>
     <img src={cardless} alt="empty deck" />
-    <h1>All Done :)</h1>
     <div>
-      <h2>
-        No Cards Due For Review In This Deck
-      </h2>
+      <h2>All Done :)</h2>
+      <h2> No Cards Due For Review In This Deck </h2>
     </div>
   </NoCards>
 );

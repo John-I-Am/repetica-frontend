@@ -5,10 +5,7 @@ export const Container = styled.div<any>`
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  padding: 10px;
-  padding-bottom: 50px;
   width: 100%;
-  overflow: scroll;
 
   form {
     display: flex;
@@ -30,6 +27,8 @@ export const Container = styled.div<any>`
   div {
     display: flex;
     gap: 10px;
+    width: 100%;
+    overflow: scroll;
   }
 
   ${(props: any) => props.noCreate

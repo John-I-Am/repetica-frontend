@@ -5,8 +5,8 @@ import { device, PURPLE_PRIMARY, ORANGE_PRIMARY } from '../../constants';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background: ghostwhite;
+  gap: 50px;
   height: 100vh;
   padding: 10px 10px 10px 60px;
 

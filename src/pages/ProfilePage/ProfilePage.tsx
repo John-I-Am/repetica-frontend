@@ -79,8 +79,9 @@ const ProfilePage = () => {
   return (
     <Container>
       <Header>
-        <h1>{user === null ? 'null' : user.name}</h1>
-        <h1>{user === null ? 'null' : user.surname}</h1>
+        <h1>
+          {`${user === null ? 'null' : user.name} ${user === null ? 'null' : user.surname}`}
+        </h1>
       </Header>
       <Main>
         <Section>

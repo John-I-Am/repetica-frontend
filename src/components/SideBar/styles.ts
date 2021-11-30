@@ -24,7 +24,7 @@ export const Container = styled.div`
   }
 
   img {
-    width: 32px;
+    width: 26px;
 
     @media ${device.mobileL} {
       width: 24px;
