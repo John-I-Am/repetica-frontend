@@ -24,10 +24,6 @@ const Card = () => {
   const cardsToStudy = cards.filter((card: any) => (
     new Date(card.checkpointDate)).getTime() <= new Date().getTime());
 
-  const back = JSON.parse(cardsToStudy[0].back);
-  const definitions = back.meanings;
-  const examples = definitions[0].definitions.map((ele: any) => ele.example);
-
   const handleStyling = (result: boolean) => {
     const word: any = document.getElementById('guess-input');
     word.disabled = true;
@@ -36,7 +32,7 @@ const Card = () => {
       word.style.color = 'green';
     } else {
       word.style.color = 'red';
-      setGuess(cardsToStudy[0].front);
+      setGuess(cardsToStudy[0].front.texts[0]);
     }
 
     if (revealed) {
@@ -68,7 +64,7 @@ const Card = () => {
 
   const handleGuess = async (event: any) => {
     event.preventDefault();
-    const answer = (cardsToStudy[0].front).toLowerCase();
+    const answer = (cardsToStudy[0].front.texts[0]).toLowerCase();
 
     if (answer === guess.toLowerCase() && !revealed) {
       setIsCorrect(true);
@@ -99,12 +95,11 @@ const Card = () => {
   };
 
   const renderAudio = () => {
-    const phonetics = back.phonetics[0];
-    if (phonetics !== undefined && 'audio' in phonetics) {
+    if (cardsToStudy[0].auxiliary.audio) {
       return (
         <div>
           <img onClick={play} src={speaker} alt="audio" />
-          <audio id="audio" src={phonetics.audio} />
+          <audio id="audio" src={cardsToStudy[0].auxiliary.audio} />
         </div>
       );
     }
@@ -125,19 +120,16 @@ const Card = () => {
           </form>
         </CardFront>
         <CardBack>
-          {definitions.map((ele: any) => (
-            <div key={`${cardsToStudy[0].id} ${ele.partOfSpeech}`}>
-              <div>
-                {ele.partOfSpeech}
-              </div>
+          {cardsToStudy[0].back.texts.map((ele: any) => (
+            <div key={`${cardsToStudy[0].id}`}>
               <p>
-                {ele.definitions[0].definition}
+                {ele}
               </p>
             </div>
           ))}
         </CardBack>
       </Cardd>
-      <CardNote examples={examples} ref={CardNoteRef} />
+      <CardNote examples={cardsToStudy[0].auxiliary.examples} ref={CardNoteRef} />
     </Container>
   );
 };

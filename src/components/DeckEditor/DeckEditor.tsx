@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { Button, Modal } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Form, TitleForm } from './styles';
-import dictionaryService from '../../services/dictionary';
-import { createCard } from '../../reducers/activeDeckReducer';
+import { Container, TitleForm } from './styles';
 import { initializeDecks, removeDeck, updateDeck } from '../../reducers/deckReducer';
+import CardEditor from '../CardEditor/CardEditor';
 
 const DeckEditor = () => {
   const [opened, setOpened] = useState(false);
@@ -17,37 +16,10 @@ const DeckEditor = () => {
   const display = activeDeck.title === undefined ? { display: 'none' } : { display: '' };
 
   const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm();
-
-  const {
     register: registerTitle,
     handleSubmit: handleSubmitTitle,
     formState: { errors: errorsTitle },
   } = useForm();
-
-  const handleAddCard = async (data: any) => {
-    try {
-      const response: any = await dictionaryService.getDefinition(data.word);
-      const stringifiedResponse = JSON.stringify(response[0]);
-
-      const card = {
-        deckId: activeDeck.id,
-        front: data.word,
-        back: stringifiedResponse,
-        level: 0,
-      };
-      dispatch(createCard(card));
-    } catch {
-      setError('word', {
-        type: 'manual',
-        message: 'unable to add card, check your spelling.',
-      });
-    }
-  };
 
   const handleChangeTitle = (data: any) => {
     dispatch(updateDeck({ ...activeDeck, title: data.title }));
@@ -61,16 +33,7 @@ const DeckEditor = () => {
   return (
     <Container>
       <Modal opened={opened} onClose={() => setOpened(false)}>
-        <Form style={display} onSubmit={handleSubmit(handleAddCard)}>
-          <label htmlFor="word">Add New word</label>
-          <input
-            placeholder="eg. Aardvark"
-            {...register('word', {
-
-            })}
-          />
-          <p className="error">{errors.word && errors.word.message}</p>
-        </Form>
+        <CardEditor />
       </Modal>
 
       <Button style={display} onClick={() => setOpened(true)}>Add</Button>

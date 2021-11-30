@@ -30,6 +30,7 @@ export interface UserCredential {
 }
 
 export interface ExistingDeck {
+  id: string,
   title: string,
   creationDate: Date,
   cards: Array<string>,
@@ -37,6 +38,7 @@ export interface ExistingDeck {
 }
 
 export interface ExistingCard {
+  id: string,
   front: string,
   back: string,
   level: number,

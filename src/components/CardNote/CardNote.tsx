@@ -24,7 +24,7 @@ const CardNote = React.forwardRef(({ examples }: CardNoteProps, ref) => {
     <Container style={hideWhenVisible}>
       <Tabs>
         <Tabs.Tab label="Examples">
-          {examples.map((ele: any) => <p key={`${ele}`}>{ele}</p>)}
+          {examples?.map((ele: any) => <p key={`${ele}`}>{ele}</p>)}
         </Tabs.Tab>
         <Tabs.Tab label="Notes">
           <p>No Notes to be found</p>
