@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import { Button, Modal } from '@mantine/core';
@@ -36,7 +35,7 @@ const DeckEditor = () => {
       const stringifiedResponse = JSON.stringify(response[0]);
 
       const card = {
-        deckId: activeDeck._id,
+        deckId: activeDeck.id,
         front: data.word,
         back: stringifiedResponse,
         level: 0,
@@ -55,7 +54,7 @@ const DeckEditor = () => {
   };
 
   const handleDeleteDeck = () => {
-    dispatch(removeDeck(activeDeck._id));
+    dispatch(removeDeck(activeDeck.id));
     dispatch(initializeDecks());
   };
 

@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
-/* eslint-disable no-underscore-dangle */
 import decksService from '../services/decks';
 import { initializeActive } from './activeDeckReducer';
 
@@ -11,14 +10,14 @@ const deckReducer = (state = [], action: any) => {
     case 'CREATE_DECK':
       return state.concat(action.data);
     case 'UPDATE_DECK':
-      return state.map((deck: any) => ((deck._id === action.data._id) ? action.data : deck));
+      return state.map((deck: any) => ((deck.id === action.data.id) ? action.data : deck));
     case 'UPDATE_DECK_LOCAL':
       return state.map((deck: any) => (
-        (deck._id === action.data.deck)
+        (deck.id === action.data.deck)
           ? { ...deck, cards: deck.cards.concat(action.data) }
           : deck));
     case 'REMOVE_DECK':
-      return state.filter((deck: any) => deck._id !== action.data);
+      return state.filter((deck: any) => deck.id !== action.data);
     case 'CLEAR_DECK':
       return [];
     default:

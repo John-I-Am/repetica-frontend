@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 import axios from 'axios';
 
@@ -28,7 +27,7 @@ const update = async (deck: any) => {
   const config: any = {
     headers: { Authorization: token },
   };
-  const response = await axios.put(`/api/decks/${deck._id}`, deck, config);
+  const response = await axios.put(`/api/decks/${deck.id}`, deck, config);
   return response.data;
 };
 
