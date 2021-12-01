@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import decksService from '../services/decks';
-import { initializeActive } from './activeDeckReducer';
 
 const deckReducer = (state = [], action: any) => {
   switch (action.type) {
@@ -11,11 +10,6 @@ const deckReducer = (state = [], action: any) => {
       return state.concat(action.data);
     case 'UPDATE_DECK':
       return state.map((deck: any) => ((deck.id === action.data.id) ? action.data : deck));
-    case 'UPDATE_DECK_LOCAL':
-      return state.map((deck: any) => (
-        (deck.id === action.data.deck)
-          ? { ...deck, cards: deck.cards.concat(action.data) }
-          : deck));
     case 'REMOVE_DECK':
       return state.filter((deck: any) => deck.id !== action.data);
     case 'CLEAR_DECK':
@@ -25,11 +19,6 @@ const deckReducer = (state = [], action: any) => {
   }
 };
 
-export const updateDeckLocal = (card: any) => ({
-  type: 'UPDATE_DECK_LOCAL',
-  data: card,
-});
-
 export const initializeDecks = () => async (dispatch: any) => {
   try {
     const decks = await decksService.getAll();
@@ -37,7 +26,6 @@ export const initializeDecks = () => async (dispatch: any) => {
       type: 'INITIALIZE_DECK',
       data: decks,
     });
-    await dispatch(initializeActive(decks));
   } catch (e) {
     console.log(e);
   }

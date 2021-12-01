@@ -39,7 +39,7 @@ const CardList = () => {
               <td>
                 <p>{` Current level: ${card.level}`}</p>
                 <p>{` Created: ${new Date(card.creationDate).toLocaleString('en-NZ')}`}</p>
-                <Button type="button" onClick={() => dispatch(removeCard(card.id))}>Remove</Button>
+                <Button type="button" onClick={() => dispatch(removeCard(card))}>Remove</Button>
               </td>
               <td>
                 <p>

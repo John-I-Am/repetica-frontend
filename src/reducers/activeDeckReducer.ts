@@ -1,5 +1,5 @@
 import cardsService from '../services/cards';
-import { updateDeckLocal } from './deckReducer';
+import { initializeDecks } from './deckReducer';
 
 const activeDeckReducer = (state: any = {}, action: any) => {
   switch (action.type) {
@@ -29,17 +29,6 @@ export const setActive = (deck: any) => async (dispatch: any) => {
   });
 };
 
-export const initializeActive = (decks: any) => async (dispatch: any) => {
-  let allCards: any = [];
-  decks.forEach((element: any) => {
-    allCards = allCards.concat(element.cards);
-  });
-  dispatch({
-    type: 'SET_ACTIVE',
-    data: { cards: allCards },
-  });
-};
-
 export const createCard = (card: any) => async (dispatch: any) => {
   try {
     const newCard = await cardsService.create(card);
@@ -47,7 +36,7 @@ export const createCard = (card: any) => async (dispatch: any) => {
       type: 'CREATE_CARD',
       data: newCard,
     });
-    dispatch(updateDeckLocal(newCard));
+    dispatch(initializeDecks());
   } catch (e) {
     console.log(e);
   }
@@ -60,18 +49,20 @@ export const updateCard = (cardToUpdate: any) => async (dispatch: any) => {
       type: 'UPDATE_CARD',
       data: updatedCard,
     });
+    dispatch(initializeDecks());
   } catch (e) {
     console.log(e);
   }
 };
 
-export const removeCard = (id: any) => async (dispatch: any) => {
+export const removeCard = (cardToRemove: any) => async (dispatch: any) => {
   try {
-    await cardsService.remove(id);
+    await cardsService.remove(cardToRemove.id);
     dispatch({
       type: 'REMOVE_CARD',
-      data: id,
+      data: cardToRemove.id,
     });
+    dispatch(initializeDecks());
   } catch (e) {
     console.log(e);
   }
