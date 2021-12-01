@@ -5,14 +5,16 @@ import { Button } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Container, Header, Form } from './styles';
 import { setUser } from '../../reducers/userReducer';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/dashboard';
 
   const {
     register: registerLogin,
@@ -30,7 +32,7 @@ const LoginForm = () => {
       });
     }
     if (window.localStorage.getItem('currentUser')) {
-      history.push('/dashboard');
+      navigate(from, { replace: true });
     }
   };
 

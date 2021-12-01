@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useHistory } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
@@ -16,7 +15,7 @@ import navIconExit from '../../assets/navIconExit.svg';
 import { Container, Logout } from './styles';
 
 const SideBar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { hovered, ref } = useHover();
@@ -29,13 +28,17 @@ const SideBar = () => {
     dispatch(clearActiveDeck());
     dispatch(clearUser());
     dispatch(clearDeck());
-    history.push('/');
+    navigate('/');
   };
 
   return (
     <Container>
-
-      <NavLink to="/dashboard">
+      <NavLink
+        style={({ isActive }) => ({
+          background: isActive ? 'Aliceblue' : '',
+        })}
+        to="/dashboard"
+      >
         <div ref={ref}>
           <Tooltip opened={!!hovered} label="Learn" withArrow>
             <ActionIcon>
@@ -45,7 +48,12 @@ const SideBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/deck">
+      <NavLink
+        style={({ isActive }) => ({
+          background: isActive ? 'Aliceblue' : '',
+        })}
+        to="/deck"
+      >
         <div ref={ref2}>
           <Tooltip opened={!!hovered2} label="Edit" withArrow>
             <ActionIcon>
@@ -55,7 +63,12 @@ const SideBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/profile">
+      <NavLink
+        style={({ isActive }) => ({
+          background: isActive ? 'Aliceblue' : '',
+        })}
+        to="/profile"
+      >
         <div ref={ref3}>
           <Tooltip opened={!!hovered3} label="Profile" withArrow>
             <ActionIcon>
@@ -72,7 +85,6 @@ const SideBar = () => {
           </ActionIcon>
         </Tooltip>
       </Logout>
-
     </Container>
   );
 };

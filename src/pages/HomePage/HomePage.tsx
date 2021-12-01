@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import './styles.ts';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { Button, Title } from '@mantine/core';
@@ -18,7 +18,7 @@ import Footer from '../../components/Footer/Footer';
 import { setActive } from '../../reducers/activeDeckReducer';
 
 const HomePage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const cardsToStudy = [{
     auxiliary: { audio: '//ssl.gstatic.com/dictionary/static/sounds/20200429/welcome--_gb_1.mp3', examples: ['you will receive a warm welcome'] },
@@ -38,7 +38,7 @@ const HomePage = () => {
         </a>
         <a href="#section-2">Demo</a>
         <a href="#section-3">Features</a>
-        <Button type="button" onClick={() => history.push('/login')}> Log in </Button>
+        <Button type="button" onClick={() => navigate('/login')}> Log in </Button>
       </NavBar>
 
       <SectionOne id="section-1">

@@ -5,8 +5,7 @@ import { Button } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Container, Header, Form, FormName,
 } from './styles';
@@ -14,7 +13,7 @@ import { registerUser } from '../../reducers/userReducer';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -33,7 +32,7 @@ const SignupForm = () => {
       });
     }
     if (window.localStorage.getItem('currentUser')) {
-      history.push('/dashboard');
+      navigate('/dashboard');
     }
   };
 

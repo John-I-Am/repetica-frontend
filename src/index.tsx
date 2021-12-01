@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
-import { NotificationsProvider } from '@mantine/notifications';
+import { NotificationsProvider, useNotifications } from '@mantine/notifications';
 import ReactDOM from 'react-dom';
 import {
-  BrowserRouter, Switch, Route, Redirect,
+  BrowserRouter, Routes, Route, useLocation, Navigate,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -17,20 +17,67 @@ import DeckPage from './pages/DeckPage/DeckPage';
 import TrendsPage from './pages/TrendsPage/TrendsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 
+const RequireAuth = ({ children }: any) => {
+  const location = useLocation();
+  const notfications = useNotifications();
+
+  if (window.localStorage.getItem('currentUser') === null) {
+    notfications.showNotification({ title: 'Unauthorized', message: 'Please sign in', color: 'red' });
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+  return children;
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <NotificationsProvider>
         <BrowserRouter>
-          <Switch>
-            <Route path="/profile" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <ProfilePage />)} />
-            <Route path="/trends" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <TrendsPage />)} />
-            <Route path="/deck" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <DeckPage />)} />
-            <Route path="/dashboard" render={() => (window.localStorage.getItem('currentUser') === null ? <Redirect to="/" /> : <DashboardPage />)} />
-            <Route path="/login" render={() => (window.localStorage.getItem('currentUser') === null ? <LoginPage /> : <Redirect to="/dashboard" />)} />
-            <Route path="/register" render={() => (window.localStorage.getItem('currentUser') === null ? <SignupPage /> : <Redirect to="/dashboard" />)} />
-            <Route path="/" render={() => <HomePage />} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/dashboard"
+              element={(
+                <RequireAuth>
+                  <DashboardPage />
+                </RequireAuth>
+              )}
+            />
+            <Route
+              path="/trends"
+              element={(
+                <RequireAuth>
+                  <TrendsPage />
+                </RequireAuth>
+              )}
+            />
+            <Route
+              path="/deck"
+              element={(
+                <RequireAuth>
+                  <DeckPage />
+                </RequireAuth>
+              )}
+            />
+            <Route
+              path="/profile"
+              element={(
+                <RequireAuth>
+                  <ProfilePage />
+                </RequireAuth>
+              )}
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<SignupPage />} />
+            <Route
+              path="*"
+              element={(
+                <main style={{ padding: '1rem' }}>
+                  <p>Nothing here!</p>
+                </main>
+              )}
+            />
+          </Routes>
         </BrowserRouter>
       </NotificationsProvider>
     </Provider>
