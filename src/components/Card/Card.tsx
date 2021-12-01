@@ -3,7 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/media-has-caption */
 import { Button } from '@mantine/core';
-
+import parse from 'html-react-parser';
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -95,7 +95,7 @@ const Card = () => {
   };
 
   const renderAudio = () => {
-    if (cardsToStudy[0].auxiliary.audio) {
+    if (cardsToStudy[0].auxiliary?.audio) {
       return (
         <div>
           <img onClick={play} src={speaker} alt="audio" />
@@ -121,13 +121,15 @@ const Card = () => {
         </CardFront>
         <CardBack>
           {cardsToStudy[0].back.texts.map((ele: any) => (
-            <p key={`${cardsToStudy[0].id}`}>
-              {ele}
-            </p>
+            parse(ele)
           ))}
         </CardBack>
       </Cardd>
-      <CardNote examples={cardsToStudy[0].auxiliary.examples} ref={CardNoteRef} />
+      <CardNote
+        examples={cardsToStudy[0].auxiliary?.examples}
+        note={cardsToStudy[0].auxiliary?.note}
+        ref={CardNoteRef}
+      />
     </Container>
   );
 };

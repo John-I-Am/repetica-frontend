@@ -1,13 +1,15 @@
 /* eslint-disable no-use-before-define */
 import React, { useState, useImperativeHandle } from 'react';
 import { Tabs } from '@mantine/core';
+import parse from 'html-react-parser';
 import { Container } from './styles';
 
 interface CardNoteProps {
   examples: Array<any>;
+  note: string
 }
 
-const CardNote = React.forwardRef(({ examples }: CardNoteProps, ref) => {
+const CardNote = React.forwardRef(({ examples, note }: CardNoteProps, ref) => {
   const [visible, setVisible] = useState(false);
 
   const hideWhenVisible = { display: visible ? '' : 'none' };
@@ -27,7 +29,7 @@ const CardNote = React.forwardRef(({ examples }: CardNoteProps, ref) => {
           {examples?.map((ele: any) => <p key={`${ele}`}>{ele}</p>)}
         </Tabs.Tab>
         <Tabs.Tab label="Notes">
-          <p>No Notes to be found</p>
+          {parse(note)}
         </Tabs.Tab>
       </Tabs>
     </Container>

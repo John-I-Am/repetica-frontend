@@ -53,7 +53,7 @@ export const Form = styled.form`
   }
 `;
 
-export const FormName = styled.form`
+export const FormName = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;

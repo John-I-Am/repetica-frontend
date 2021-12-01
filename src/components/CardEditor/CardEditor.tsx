@@ -1,17 +1,22 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { RichTextEditor } from '@mantine/rte';
+import { Button } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import dictionaryService from '../../services/dictionary';
 import { createCard } from '../../reducers/activeDeckReducer';
-import { Form } from './styles';
+import { Form, Container } from './styles';
 import { ExistingDeck } from '../../types';
 
 const CardEditor = () => {
   const dispatch = useDispatch();
-  const [value, onChange] = useState('...');
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
+  const [note, setNote] = useState('');
+  const [auxiliary, setAuxiliary] = useState({ audio: '', examples: [], note: '' });
+
   const activeDeck: ExistingDeck = useSelector((state: any) => state.activeDeck);
   const {
     register,
@@ -20,7 +25,7 @@ const CardEditor = () => {
     formState: { errors },
   } = useForm();
 
-  const handleAddCard = async (data: any) => {
+  const parseDictionary = async (data: any) => {
     try {
       const response: any = await dictionaryService.getDefinition(data.word);
       const examples: any = [];
@@ -30,15 +35,9 @@ const CardEditor = () => {
       const audio = response[0].phonetics[0]?.audio;
       const { definition } = response[0].meanings[0].definitions[0];
 
-      const card = {
-        type: 'vocab',
-        deckId: activeDeck.id,
-        auxiliary: { audio, examples },
-        front: { texts: [data.word] },
-        back: { texts: [definition] },
-        level: 0,
-      };
-      dispatch(createCard(card));
+      setAuxiliary({ ...auxiliary, audio, examples });
+      setFront('word');
+      setBack(definition);
     } catch {
       setError('word', {
         type: 'manual',
@@ -47,10 +46,27 @@ const CardEditor = () => {
     }
   };
 
+  const handleAddCard = async () => {
+    try {
+      const card = {
+        type: 'vocab',
+        deckId: activeDeck.id,
+        auxiliary,
+        front: { texts: [front] },
+        back: { texts: [back] },
+        level: 0,
+      };
+      card.auxiliary.note = note;
+      dispatch(createCard(card));
+    } catch {
+      console.log('something went wrong');
+    }
+  };
+
   return (
-    <div>
-      <Form onSubmit={handleSubmit(handleAddCard)}>
-        <label htmlFor="word">Add Word</label>
+    <Container>
+      <Form onSubmit={handleSubmit(parseDictionary)}>
+        <label htmlFor="word">Word Auto Generator</label>
         <input
           placeholder="eg. Aardvark"
           {...register('word', {
@@ -59,10 +75,14 @@ const CardEditor = () => {
         />
         <p className="error">{errors.word && errors.word.message}</p>
       </Form>
-
-      <RichTextEditor value={value} onChange={onChange} />
-      <RichTextEditor value={value} onChange={onChange} />
-    </div>
+      <h2>Front</h2>
+      <RichTextEditor value={front} onChange={setFront} />
+      <h2>Back</h2>
+      <RichTextEditor value={back} onChange={setBack} />
+      <h2>Note</h2>
+      <RichTextEditor value={note} onChange={setNote} />
+      <Button onClick={handleAddCard}>Create</Button>
+    </Container>
 
   );
 };

@@ -32,7 +32,7 @@ const DeckEditor = () => {
 
   return (
     <Container>
-      <Modal opened={opened} onClose={() => setOpened(false)}>
+      <Modal size="xl" opened={opened} onClose={() => setOpened(false)}>
         <CardEditor />
       </Modal>
 

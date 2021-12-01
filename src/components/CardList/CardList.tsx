@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mantine/core';
+import parse from 'html-react-parser';
 import { Table } from './styles';
 import { removeCard } from '../../reducers/activeDeckReducer';
 import DeckEditor from '../DeckEditor/DeckEditor';
@@ -42,12 +43,10 @@ const CardList = () => {
                 <Button type="button" onClick={() => dispatch(removeCard(card))}>Remove</Button>
               </td>
               <td>
-                <p>
-                  { card.front.texts.map((e: any) => <p>{e}</p>)}
-                </p>
+                { card.front.texts.map((e: any) => parse(e))}
               </td>
               <td>
-                { card.back.texts.map((e: any) => <p>{e}</p>)}
+                { card.back.texts.map((e: any) => parse(e))}
               </td>
               <td>
                 {checkDate(card.checkpointDate)}
