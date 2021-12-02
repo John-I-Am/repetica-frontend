@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { RichTextEditor } from '@mantine/rte';
-import { Button } from '@mantine/core';
+import { Button, Checkbox } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -16,6 +16,7 @@ const CardEditor = () => {
   const [back, setBack] = useState('');
   const [note, setNote] = useState('');
   const [auxiliary, setAuxiliary] = useState({ audio: '', examples: [], note: '' });
+  const [cloze, setCloze] = useState(false);
 
   const activeDeck: ExistingDeck = useSelector((state: any) => state.activeDeck);
   const {
@@ -36,7 +37,7 @@ const CardEditor = () => {
       const { definition } = response[0].meanings[0].definitions[0];
 
       setAuxiliary({ ...auxiliary, audio, examples });
-      setFront('word');
+      setFront(data.word);
       setBack(definition);
     } catch {
       setError('word', {
@@ -49,7 +50,7 @@ const CardEditor = () => {
   const handleAddCard = async () => {
     try {
       const card = {
-        type: 'vocab',
+        type: cloze ? 'cloze' : 'vocab',
         deckId: activeDeck.id,
         auxiliary,
         front: { texts: [front] },
@@ -75,6 +76,8 @@ const CardEditor = () => {
         />
         <p className="error">{errors.word && errors.word.message}</p>
       </Form>
+      <Checkbox label="Cloze" onChange={(event) => setCloze(event.currentTarget.checked)} />
+
       <h2>Front</h2>
       <RichTextEditor value={front} onChange={setFront} />
       <h2>Back</h2>

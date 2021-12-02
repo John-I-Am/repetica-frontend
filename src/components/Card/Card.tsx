@@ -106,18 +106,33 @@ const Card = () => {
     return null;
   };
 
+  const renderFront = () => {
+    if (cardsToStudy[0].type === 'cloze') {
+      return (
+        <form onSubmit={handleGuess}>
+          <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
+        </form>
+      );
+    }
+
+    return (
+      cardsToStudy[0].front.texts.map((ele: any) => (
+        parse(ele)
+      ))
+    );
+  };
+
   return (
     <Container>
       <Cardd>
         <CardHeader>
           <b>{`Level ${cardsToStudy[0].level}`}</b>
-          <Button onClick={handleGuess}>Next </Button>
+          <Button onClick={handleIncorrect}>Incorrect </Button>
+          <Button onClick={handleCorrect}>Correct </Button>
           {renderAudio()}
         </CardHeader>
         <CardFront>
-          <form onSubmit={handleGuess}>
-            <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
-          </form>
+          {renderFront()}
         </CardFront>
         <CardBack>
           {cardsToStudy[0].back.texts.map((ele: any) => (

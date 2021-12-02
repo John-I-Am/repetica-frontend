@@ -21,6 +21,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const cardsToStudy = [{
+    type: 'cloze',
     auxiliary: { audio: '//ssl.gstatic.com/dictionary/static/sounds/20200429/welcome--_gb_1.mp3', examples: ['<p>you will receive a warm welcome</p>'], note: '<p>sdf</p>' },
     front: { texts: ['welcome'] },
     back: { texts: ['an instance or manner of greeting someone'] },
