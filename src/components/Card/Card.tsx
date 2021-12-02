@@ -1,13 +1,10 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-a11y/media-has-caption */
-import { Button } from '@mantine/core';
+/* eslint-disable no-undef */
+import { Button, ActionIcon } from '@mantine/core';
 import parse from 'html-react-parser';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Container, Cardd, CardHeader, CardFront, CardBack,
+  Container, CardWrapper, CardHeader, CardFront, CardBack, GuessForm,
 } from './styles';
 import { updateCard } from '../../reducers/activeDeckReducer';
 import CardNote from '../CardNote/CardNote';
@@ -15,32 +12,13 @@ import speaker from '../../assets/audio.svg';
 
 const Card = () => {
   const dispatch = useDispatch();
-  const [guess, setGuess] = useState('');
+  const [clozeGuess, setClozeGuess] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const CardNoteRef: any = useRef();
 
   const cards = useSelector((state: any) => state.activeDeck.cards);
   const cardsToStudy = cards.filter((card: any) => (
     new Date(card.checkpointDate)).getTime() <= new Date().getTime());
-
-  const handleStyling = (result: boolean) => {
-    const word: any = document.getElementById('guess-input');
-    word.disabled = true;
-
-    if (result) {
-      word.style.color = 'green';
-    } else {
-      word.style.color = 'red';
-      setGuess(cardsToStudy[0].front.texts[0]);
-    }
-
-    if (revealed) {
-      word.disabled = false;
-      setGuess('');
-      word.style.color = 'black';
-    }
-  };
 
   const handleIncorrect = async () => {
     let updatedCard: any;
@@ -62,74 +40,94 @@ const Card = () => {
     dispatch(updateCard(updatedCard));
   };
 
-  const handleGuess = async (event: any) => {
+  const handleClozeGuess = async (event: any) => {
     event.preventDefault();
-    const answer = (cardsToStudy[0].front.texts[0]).toLowerCase();
+    const answer = (cardsToStudy[0].auxiliary.answer).toLowerCase();
 
-    if (answer === guess.toLowerCase() && !revealed) {
+    if (answer === clozeGuess.toLowerCase() && !revealed) {
       setIsCorrect(true);
-      handleStyling(true);
       setRevealed(true);
-    } else if (answer !== guess.toLowerCase() && !revealed) {
+    } else if (answer !== clozeGuess.toLowerCase() && !revealed) {
+      setClozeGuess('');
       setIsCorrect(false);
-      handleStyling(false);
       setRevealed(true);
     }
 
     if (revealed && isCorrect) {
       handleCorrect();
       setRevealed(false);
-      handleStyling(true);
     } else if (revealed && !isCorrect) {
       handleIncorrect();
       setRevealed(false);
-      handleStyling(true);
     }
-
-    CardNoteRef.current.toggleVisibility();
   };
 
-  const play = () => {
-    const audio: any = document.getElementById('audio');
-    audio.play();
-  };
-
-  const renderAudio = () => {
+  const renderAudio = (): null | JSX.Element => {
     if (cardsToStudy[0].auxiliary?.audio) {
+      const audio = new Audio(cardsToStudy[0].auxiliary.audio);
       return (
         <div>
-          <img onClick={play} src={speaker} alt="audio" />
-          <audio id="audio" src={cardsToStudy[0].auxiliary.audio} />
+          <ActionIcon>
+            <input type="image" src={speaker} onClick={() => audio.play()} alt="audio" />
+          </ActionIcon>
         </div>
       );
     }
     return null;
   };
 
+  const renderFront = () => {
+    if (cardsToStudy[0].type === 'cloze') {
+      return (
+        <GuessForm isCorrect={isCorrect} onSubmit={handleClozeGuess}>
+          <input placeholder={revealed ? cardsToStudy[0].auxiliary.answer : ''} value={clozeGuess} onChange={({ target }) => setClozeGuess(target.value)} />
+        </GuessForm>
+      );
+    }
+
+    return (
+      cardsToStudy[0].front.texts.map((ele: any) => (
+        parse(ele)
+      ))
+    );
+  };
+
   return (
     <Container>
-      <Cardd>
-        <CardHeader>
+      <CardWrapper>
+        <CardHeader revealed={revealed}>
           <b>{`Level ${cardsToStudy[0].level}`}</b>
-          <Button onClick={handleGuess}>Next </Button>
+          {cardsToStudy[0].type === 'cloze' ? null : (
+            <div>
+              <div style={{ display: revealed ? '' : 'none' }}>
+                <Button onClick={handleIncorrect}>Incorrect</Button>
+                <Button onClick={handleCorrect}>Correct</Button>
+              </div>
+              <div style={{ display: revealed ? 'none' : '' }}>
+                <Button onClick={() => setRevealed(true)}>Reveal</Button>
+              </div>
+            </div>
+          )}
           {renderAudio()}
         </CardHeader>
+
         <CardFront>
-          <form onSubmit={handleGuess}>
-            <input id="guess-input" value={guess} onChange={({ target }) => setGuess(target.value)} />
-          </form>
+          {renderFront()}
         </CardFront>
+
         <CardBack>
-          {cardsToStudy[0].back.texts.map((ele: any) => (
-            parse(ele)
-          ))}
+          {cardsToStudy[0].back.texts.map((ele: any) => (parse(ele)))}
         </CardBack>
-      </Cardd>
-      <CardNote
-        examples={cardsToStudy[0].auxiliary?.examples}
-        note={cardsToStudy[0].auxiliary?.note}
-        ref={CardNoteRef}
-      />
+      </CardWrapper>
+
+      { revealed
+        ? (
+          <CardNote
+            examples={cardsToStudy[0].auxiliary?.examples}
+            note={cardsToStudy[0].auxiliary?.note}
+          />
+        )
+        : null}
     </Container>
   );
 };

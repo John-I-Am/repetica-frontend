@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { device, ORANGE_PRIMARY } from '../../constants';
 
 export const Container = styled.div`
@@ -15,7 +15,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Cardd = styled.div`
+export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -23,40 +23,55 @@ export const Cardd = styled.div`
   background: white;
   border-radius: 20px;
   padding: 5%;
+  height: 50%;
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<any>`
     display: flex;
     justify-content: space-between;
     color: ${ORANGE_PRIMARY};
-    img {
-        width: 24px;
-      }
+
+    input {
+      width: 32px;
+    }
 
     @media ${device.mobileL} {
 
+    }
+`;
+
+export const GuessForm = styled.form<any>`
+  input {
+    border: none;
+    text-align: center;
+    font-size: 48px;
+    background:  #f0f0f5;
+
+    ::placeholder {
+      color: red;
+    }
+
+    ${(props: any) => props.isCorrect
+    && css`
+      color: green;
+    `};
+
+    @media ${device.mobileL} {
+      font-size: 24px;
+    }
   }
 `;
 
-export const CardFront = styled.div`
+export const CardFront = styled.div<any>`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    input {
-      border: none;
-      text-align: center;
-      font-size: 48px;
-      background:  #f0f0f5;
-
-      @media ${device.mobileL} {
-        font-size: 24px;
-      }
-    }
+    overflow: scroll;
 `;
 
 export const CardBack = styled.div`
   text-align: center;
   font-size: 14px;
   border-top: 1px solid black;
+  overflow: scroll;
 `;
