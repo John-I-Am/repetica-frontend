@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import './styles.ts';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import { Button, Title } from '@mantine/core';
 import {
@@ -19,17 +20,25 @@ import { setActive } from '../../reducers/activeDeckReducer';
 
 const HomePage = () => {
   const navigate = useNavigate();
-
-  const cardsToStudy = [{
-    type: 'cloze',
-    auxiliary: { audio: '//ssl.gstatic.com/dictionary/static/sounds/20200429/welcome--_gb_1.mp3', examples: ['<p>you will receive a warm welcome</p>'], note: '<p>sdf</p>' },
-    front: { texts: ['welcome'] },
-    back: { texts: ['an instance or manner of greeting someone'] },
-    level: 4,
-    checkpointDate: new Date(),
-  }];
   const dispatch = useDispatch();
-  dispatch(setActive({ cards: cardsToStudy }));
+  const activeDeck = useSelector((state: any) => state.activeDeck);
+
+  useEffect(() => {
+    const cardsToStudy = [{
+      type: 'cloze',
+      auxiliary: {
+        audio: '//ssl.gstatic.com/dictionary/static/sounds/20200429/welcome--_gb_1.mp3',
+        examples: ['<p>you will receive a warm welcome</p>'],
+        note: '<p>sdf</p>',
+        answer: 'welcome',
+      },
+      front: { texts: ['welcome'] },
+      back: { texts: ['an instance or manner of greeting someone'] },
+      level: 4,
+      checkpointDate: new Date(),
+    }];
+    dispatch(setActive({ cards: cardsToStudy }));
+  }, []);
 
   return (
     <div className="home-page">
@@ -58,7 +67,7 @@ const HomePage = () => {
       </SectionOne>
 
       <SectionTwo id="section-2">
-        <Card />
+        {activeDeck.cards ? <Card /> : null}
       </SectionTwo>
 
       <SectionThree id="section-3">

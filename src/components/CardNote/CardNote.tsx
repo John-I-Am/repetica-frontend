@@ -11,7 +11,7 @@ const CardNote = ({ examples, note }: CardNoteProps) => (
   <Container>
     <Tabs>
       <Tabs.Tab label="Examples">
-        {examples?.map((ele: any) => <p key={`${ele}`}>{ele}</p>)}
+        {examples.length !== 0 ? examples.map((ele: any) => <div key={`${ele}`}>{(ele)}</div>) : ''}
       </Tabs.Tab>
       <Tabs.Tab label="Notes">
         {parse(note)}

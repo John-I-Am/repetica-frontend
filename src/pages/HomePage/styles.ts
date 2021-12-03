@@ -89,6 +89,7 @@ export const SectionTwo = styled.div<any>`
   align-items: center;
   padding-left: 10%;
   padding-right: 10%;
+  background: ghostwhite;
 `;
 
 export const SectionThree = styled.div<any>`

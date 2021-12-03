@@ -43,10 +43,10 @@ const CardList = () => {
                 <Button type="button" onClick={() => dispatch(removeCard(card))}>Remove</Button>
               </td>
               <td>
-                { card.front.texts.map((e: any) => parse(e))}
+                { card.front.texts.map((e: any) => <div key={card.id + e}>{parse(e)}</div>)}
               </td>
               <td>
-                { card.back.texts.map((e: any) => parse(e))}
+                { card.back.texts.map((e: any) => <div key={card.id + e}>{parse(e)}</div>)}
               </td>
               <td>
                 {checkDate(card.checkpointDate)}

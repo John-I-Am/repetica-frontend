@@ -20,6 +20,7 @@ export const Table = styled.table`
     font-size: 16px;
     position: sticky; 
     top: 0;
+    z-index: 1;
   }
 
   td {

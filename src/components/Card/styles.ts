@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   width: 80%;
   height: 80%;
 
@@ -18,11 +18,12 @@ export const Container = styled.div`
 export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 20px;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
   background: white;
   border-radius: 20px;
   padding: 5%;
+  width: 100%;
   height: 50%;
 `;
 
@@ -66,12 +67,15 @@ export const CardFront = styled.div<any>`
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-wrap: break-word;
     overflow: scroll;
+    height: 100%;
 `;
 
 export const CardBack = styled.div`
   text-align: center;
-  font-size: 14px;
   border-top: 1px solid black;
+  padding-top: 20px;
   overflow: scroll;
+  height: 100%;
 `;

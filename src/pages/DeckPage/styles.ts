@@ -10,7 +10,7 @@ export const Container = styled.div`
   height: 100vh;
   padding: 10px 10px 10px 60px;
 
-  @media only screen and (max-width: 600px) {
+  @media ${device.mobileL} {
     padding: 60px 10px 10px 10px;
   }
 `;

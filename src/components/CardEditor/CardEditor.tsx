@@ -69,7 +69,6 @@ const CardEditor = () => {
       };
       card.auxiliary.note = note;
       card.auxiliary.answer = test;
-      console.log(card);
       dispatch(createCard(card));
     } catch {
       console.log('something went wrong');

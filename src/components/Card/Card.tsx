@@ -87,7 +87,7 @@ const Card = () => {
 
     return (
       cardsToStudy[0].front.texts.map((ele: any) => (
-        parse(ele)
+        <div key={ele.id + ele}>{parse(ele)}</div>
       ))
     );
   };
@@ -116,7 +116,7 @@ const Card = () => {
         </CardFront>
 
         <CardBack>
-          {cardsToStudy[0].back.texts.map((ele: any) => (parse(ele)))}
+          {cardsToStudy[0].back.texts.map((ele: any) => <div key={ele.id + ele}>{parse(ele)}</div>)}
         </CardBack>
       </CardWrapper>
 
