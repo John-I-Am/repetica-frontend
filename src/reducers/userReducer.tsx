@@ -2,7 +2,6 @@
 import userService from '../services/users';
 import cardService from '../services/cards';
 import deckService from '../services/decks';
-import { clearActiveDeck } from './activeDeckReducer';
 
 const userReducer = (state = null, action: any) => {
   switch (action.type) {
@@ -18,7 +17,6 @@ const userReducer = (state = null, action: any) => {
 
 export const setUser = (user: any) => async (dispatch: any) => {
   try {
-    await dispatch(clearActiveDeck());
     const currentUser: any = await userService.login(user);
     cardService.setToken(currentUser.token);
     userService.setToken(currentUser.token);
@@ -66,10 +64,9 @@ export const updateUser = (newUser: any) => async (dispatch: any) => {
   }
 };
 
-export const registerUser = (newUser: any) => async (dispatch: any) => {
+export const registerUser = (newUser: any) => async () => {
   try {
     await userService.register(newUser);
-    await dispatch(setUser(newUser));
   } catch (e: any) {
     console.log(e);
     return (e.response.data.error);

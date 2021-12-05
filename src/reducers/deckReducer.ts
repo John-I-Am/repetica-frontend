@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-return-assign */
 import decksService from '../services/decks';
 
 const deckReducer = (state = [], action: any) => {
