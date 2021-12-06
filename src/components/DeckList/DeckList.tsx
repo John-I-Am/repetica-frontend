@@ -24,7 +24,7 @@ const DeckList = ({ noCreate }: any) => {
       </form>
       <div>
         <Button onClick={handleShowAll}> All Cards</Button>
-        <Button onClick={() => dispatch(createDeck())}> New Deck</Button>
+        <Button onClick={() => dispatch(createDeck())}> Create Deck</Button>
         {decks.map((deck: any) => (
           <Button variant="outline" key={deck.id} onClick={() => dispatch(setActive(deck))}>
             <p>{deck.title}</p>

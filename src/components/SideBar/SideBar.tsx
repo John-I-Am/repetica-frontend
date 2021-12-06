@@ -57,7 +57,7 @@ const SideBar = () => {
         <div ref={ref2}>
           <Tooltip opened={!!hovered2} label="Edit" withArrow>
             <ActionIcon>
-              <img src={navIconEdit} alt="learn" />
+              <img src={navIconEdit} alt="edit" />
             </ActionIcon>
           </Tooltip>
         </div>
@@ -72,7 +72,7 @@ const SideBar = () => {
         <div ref={ref3}>
           <Tooltip opened={!!hovered3} label="Profile" withArrow>
             <ActionIcon>
-              <img src={navIconProfile} alt="learn" />
+              <img src={navIconProfile} alt="profile" />
             </ActionIcon>
           </Tooltip>
         </div>
@@ -80,7 +80,7 @@ const SideBar = () => {
 
       <Logout onClick={handleLogout} ref={ref4}>
         <Tooltip opened={!!hovered4} label="Logout" withArrow>
-          <ActionIcon title="blahblah">
+          <ActionIcon>
             <img src={navIconExit} alt="exit" />
           </ActionIcon>
         </Tooltip>

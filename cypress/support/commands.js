@@ -29,18 +29,18 @@ Cypress.Commands.add('login', ({ email, password }) => {
     email, password,
   }).then(({ body }) => {
     localStorage.setItem('currentUser', JSON.stringify(body));
-    cy.visit('http://localhost:3000');
+    cy.visit('/dashboard');
   });
 });
 
-Cypress.Commands.add('createCard', ({ front, back, level }) => {
-  cy.request({
-    url: 'http://localhost:3001/api/cards',
-    method: postMessage,
-    body: { front, back, level },
-    headers: {
-      Authorization: `bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`,
-    },
-  });
-  cy.visit('http://localhost:3000');
-});
+// Cypress.Commands.add('createCard', ({ front, back, level }) => {
+//   cy.request({
+//     url: 'http://localhost:3001/api/cards',
+//     method: postMessage,
+//     body: { front, back, level },
+//     headers: {
+//       Authorization: `bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`,
+//     },
+//   });
+//   cy.visit('http://localhost:3000');
+// });
